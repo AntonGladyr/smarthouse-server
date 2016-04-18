@@ -105,13 +105,28 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        // webviews_default_index
+        // webviews_pages_home
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'webviews_default_index');
+                return $this->redirect($pathinfo.'/', 'webviews_pages_home');
             }
 
-            return array (  '_controller' => 'WebViewsBundle\\Controller\\DefaultController::indexAction',  '_route' => 'webviews_default_index',);
+            return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::Home',  '_route' => 'webviews_pages_home',);
+        }
+
+        // webviews_pages_powerinfo
+        if ($pathinfo === '/power') {
+            return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::powerInfo',  '_route' => 'webviews_pages_powerinfo',);
+        }
+
+        // webviews_pages_temperatureinfo
+        if ($pathinfo === '/temperature') {
+            return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::temperatureInfo',  '_route' => 'webviews_pages_temperatureinfo',);
+        }
+
+        // webviews_pages_waterinfo
+        if ($pathinfo === '/water') {
+            return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::waterInfo',  '_route' => 'webviews_pages_waterinfo',);
         }
 
         // rest_rest_index
