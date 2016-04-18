@@ -19,21 +19,21 @@ class PagesController extends Controller
      * @Route("/power")
      */
     public function powerInfo() {
-    	return $this->render('WebViewsBundle:Pages:power.html.twig');
+    	return $this->render('Pages/power.html.twig');
     }
 
     /**
      * @Route("/temperature")
      */
     public function temperatureInfo() {
-    	return $this->render('WebViewsBundle:Pages:temperature.html.twig');
+    	return $this->render('Pages/temperature.html.twig');
     }
 
     /**
      * @Route("/water")
      */
     public function waterInfo() {
-    	return $this->render('WebViewsBundle:Pages:water.html.twig');
+    	return $this->render('Pages/water.html.twig');
     }
 
     
