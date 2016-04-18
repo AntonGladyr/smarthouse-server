@@ -1,0 +1,16 @@
+web_views:
+    resource: "@WebViewsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+rest:
+    resource: "@RESTBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+web_socket:
+    resource: "@WebSocketBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
