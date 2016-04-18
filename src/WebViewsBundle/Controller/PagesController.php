@@ -12,7 +12,7 @@ class PagesController extends Controller
      */
     public function Home()
     {
-        return $this->render('WebViewsBundle:Pages:home.html.twig');
+        return $this->render('Pages/home.html.twig');
     }
 
     /**
