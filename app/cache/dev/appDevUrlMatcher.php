@@ -111,22 +111,35 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return $this->redirect($pathinfo.'/', 'webviews_pages_home');
             }
 
-            return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::Home',  '_route' => 'webviews_pages_home',);
+            return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::home',  '_route' => 'webviews_pages_home',);
         }
 
-        // webviews_pages_powerinfo
-        if ($pathinfo === '/power') {
-            return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::powerInfo',  '_route' => 'webviews_pages_powerinfo',);
+        // webviews_pages_controls
+        if ($pathinfo === '/controls') {
+            return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::controls',  '_route' => 'webviews_pages_controls',);
         }
 
-        // webviews_pages_temperatureinfo
-        if ($pathinfo === '/temperature') {
-            return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::temperatureInfo',  '_route' => 'webviews_pages_temperatureinfo',);
-        }
+        if (0 === strpos($pathinfo, '/info')) {
+            // webviews_pages_allinfo
+            if ($pathinfo === '/info') {
+                return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::allInfo',  '_route' => 'webviews_pages_allinfo',);
+            }
 
-        // webviews_pages_waterinfo
-        if ($pathinfo === '/water') {
-            return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::waterInfo',  '_route' => 'webviews_pages_waterinfo',);
+            // webviews_pages_powerinfo
+            if ($pathinfo === '/info/power') {
+                return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::powerInfo',  '_route' => 'webviews_pages_powerinfo',);
+            }
+
+            // webviews_pages_temperatureinfo
+            if ($pathinfo === '/info/temperature') {
+                return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::temperatureInfo',  '_route' => 'webviews_pages_temperatureinfo',);
+            }
+
+            // webviews_pages_waterinfo
+            if ($pathinfo === '/info/water') {
+                return array (  '_controller' => 'WebViewsBundle\\Controller\\PagesController::waterInfo',  '_route' => 'webviews_pages_waterinfo',);
+            }
+
         }
 
         // rest_rest_index

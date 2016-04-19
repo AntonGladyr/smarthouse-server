@@ -16,21 +16,22 @@ class WebSocket implements MessageComponentInterface {
     }
     
     public function onOpen(ConnectionInterface $connection) {
-        echo "New connection. Id: ".$connection->resourceId;
+        echo "\nNew connection. Id: ".$connection->resourceId."\n";
         $this->clients->attach($connection);
     }
 
     public function onClose(ConnectionInterface $connection) {
-        echo "Disconnect. Id: ".$connection->resourceId;
+        echo "\nDisconnect. Id: ".$connection->resourceId."\n";
         $this->clients->detach($connection);
     }
 
     public function onMessage(ConnectionInterface $connection, $msg) {
-        echo "$msg\n";
+        $info = simplexml_load_string($msg);
+
     }
 
     public function onError(ConnectionInterface $connection, \Exception $e) {
-    
+
     }
 
 }

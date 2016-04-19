@@ -18,8 +18,8 @@ class __TwigTemplate_9d723f2d04fd365f33f908729214b57b09fec5e4cbffb6d6910a3d3d56a
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        $__internal_c90bc3110f204c4bf23e4df1f58e859bb724787e2c5d6ecf533eec6019ad20f3 = $this->env->getExtension("native_profiler");
-        $__internal_c90bc3110f204c4bf23e4df1f58e859bb724787e2c5d6ecf533eec6019ad20f3->enter($__internal_c90bc3110f204c4bf23e4df1f58e859bb724787e2c5d6ecf533eec6019ad20f3_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "WebViewsBundle:Pages:base.html.twig"));
+        $__internal_e796fdefeb3fdc4c6c3a1f0ae3470554bcf6fe0253ee395d0716cc12f09f7957 = $this->env->getExtension("native_profiler");
+        $__internal_e796fdefeb3fdc4c6c3a1f0ae3470554bcf6fe0253ee395d0716cc12f09f7957->enter($__internal_e796fdefeb3fdc4c6c3a1f0ae3470554bcf6fe0253ee395d0716cc12f09f7957_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "WebViewsBundle:Pages:base.html.twig"));
 
         // line 1
         echo "<!DOCTYPE html>
@@ -259,9 +259,11 @@ class __TwigTemplate_9d723f2d04fd365f33f908729214b57b09fec5e4cbffb6d6910a3d3d56a
     <body>
         <nav>
             <ul>
-\t            <li><a href=\"#\">Temperature</a></li>
-\t            <li><a href=\"#\">Home</a></li>
-\t            <li><a href=\"#\">Water</a></li>
+\t\t\t\t<li><a href=\"/\">Home</a></li>
+                <li><a href=\"/controls\">Controls</a></li>
+\t\t\t\t<li><a href=\"/info/power\">Power</a></li>
+\t            <li><a href=\"/info/temperature\">Temperature</a></li>
+\t            <li><a href=\"/info/water\">Water</a></li>
             </ul>
             <div class=\"button\">
 \t            <a class=\"btn-open\" href=\"#\"></a>
@@ -270,22 +272,21 @@ class __TwigTemplate_9d723f2d04fd365f33f908729214b57b09fec5e4cbffb6d6910a3d3d56a
         <div class=\"overlay\">
 \t        <div class=\"wrap\">
 \t\t        <ul class=\"wrap-nav\">
-\t\t\t        <li><a href=\"#\">Temperature</a>
-\t\t\t        <ul>
-\t\t\t\t        <li><a href=\"#\">Text info</a></li>
-\t\t\t\t        <li><a href=\"#\">Graphics</a></li>
-\t\t\t        </ul>
-\t\t\t        </li>
-\t\t\t        <li><a href=\"#\">Home</a>
-\t\t\t        <ul>
-\t\t\t\t    </ul>
-\t\t\t        </li>
-\t\t\t        <li><a href=\"#\">Water</a>
-\t\t\t        <ul>
-\t\t\t\t        <li><a href=\"#\">Text info</a></li>
-\t\t\t\t        <li><a href=\"#\">Graphics</a></li>
-\t\t\t        </ul>
-\t\t\t        </li>
+\t\t\t\t\t<li><a href=\"/\">Home</a>
+\t\t\t\t\t\t<ul>
+\t\t\t\t\t\t</ul>
+\t\t\t\t\t</li>
+                    <li><a href=\"/controls\">Controls</a>
+                        <ul>
+                        </ul>
+                    </li>
+\t\t\t\t\t<li><a href=\"/info\">Info</a>
+\t\t\t\t\t\t<ul>
+\t\t\t\t\t\t\t<li><a href=\"/info/power\">Power</a></li>
+\t\t\t\t\t\t\t<li><a href=\"/info/temperature\">Temperature</a></li>
+                            <li><a href=\"/info/water\">Water</a></li>
+\t\t\t\t\t\t</ul>
+\t\t\t\t\t</li>
                     <br><br><br><br><br><br><br><br><br><br><br><br>
                 </ul>
                 <p>
@@ -295,9 +296,9 @@ class __TwigTemplate_9d723f2d04fd365f33f908729214b57b09fec5e4cbffb6d6910a3d3d56a
         </div>
         <div class=\"content\">
 \t    ";
-        // line 266
-        $this->displayBlock('body', $context, $blocks);
         // line 267
+        $this->displayBlock('body', $context, $blocks);
+        // line 268
         echo "        </div>
         <script>
             \$(document).ready(function(){
@@ -316,43 +317,43 @@ class __TwigTemplate_9d723f2d04fd365f33f908729214b57b09fec5e4cbffb6d6910a3d3d56a
 </html>
 ";
         
-        $__internal_c90bc3110f204c4bf23e4df1f58e859bb724787e2c5d6ecf533eec6019ad20f3->leave($__internal_c90bc3110f204c4bf23e4df1f58e859bb724787e2c5d6ecf533eec6019ad20f3_prof);
+        $__internal_e796fdefeb3fdc4c6c3a1f0ae3470554bcf6fe0253ee395d0716cc12f09f7957->leave($__internal_e796fdefeb3fdc4c6c3a1f0ae3470554bcf6fe0253ee395d0716cc12f09f7957_prof);
 
     }
 
     // line 10
     public function block_title($context, array $blocks = array())
     {
-        $__internal_849c56066279e1ef5af248ad6b1eae49b37b15b421e8a4de5b32b35b8187ffc0 = $this->env->getExtension("native_profiler");
-        $__internal_849c56066279e1ef5af248ad6b1eae49b37b15b421e8a4de5b32b35b8187ffc0->enter($__internal_849c56066279e1ef5af248ad6b1eae49b37b15b421e8a4de5b32b35b8187ffc0_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "title"));
+        $__internal_ace51ea19c6435d14e4bdfb3fbeb5b58a8acf9d5aef38a117a7f52fbf8f45094 = $this->env->getExtension("native_profiler");
+        $__internal_ace51ea19c6435d14e4bdfb3fbeb5b58a8acf9d5aef38a117a7f52fbf8f45094->enter($__internal_ace51ea19c6435d14e4bdfb3fbeb5b58a8acf9d5aef38a117a7f52fbf8f45094_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "title"));
 
         echo "Home Control";
         
-        $__internal_849c56066279e1ef5af248ad6b1eae49b37b15b421e8a4de5b32b35b8187ffc0->leave($__internal_849c56066279e1ef5af248ad6b1eae49b37b15b421e8a4de5b32b35b8187ffc0_prof);
+        $__internal_ace51ea19c6435d14e4bdfb3fbeb5b58a8acf9d5aef38a117a7f52fbf8f45094->leave($__internal_ace51ea19c6435d14e4bdfb3fbeb5b58a8acf9d5aef38a117a7f52fbf8f45094_prof);
 
     }
 
     // line 224
     public function block_stylesheets($context, array $blocks = array())
     {
-        $__internal_94bdd11885f94604584c7497ad120136f51b057dff1ec34c0b09ccc6dac3b05c = $this->env->getExtension("native_profiler");
-        $__internal_94bdd11885f94604584c7497ad120136f51b057dff1ec34c0b09ccc6dac3b05c->enter($__internal_94bdd11885f94604584c7497ad120136f51b057dff1ec34c0b09ccc6dac3b05c_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "stylesheets"));
+        $__internal_de991e5f0bb1aba9054b87ba83d821d09b0e98d5ccc3f12da805fbbf9b7dd252 = $this->env->getExtension("native_profiler");
+        $__internal_de991e5f0bb1aba9054b87ba83d821d09b0e98d5ccc3f12da805fbbf9b7dd252->enter($__internal_de991e5f0bb1aba9054b87ba83d821d09b0e98d5ccc3f12da805fbbf9b7dd252_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "stylesheets"));
 
         // line 225
         echo "        ";
         
-        $__internal_94bdd11885f94604584c7497ad120136f51b057dff1ec34c0b09ccc6dac3b05c->leave($__internal_94bdd11885f94604584c7497ad120136f51b057dff1ec34c0b09ccc6dac3b05c_prof);
+        $__internal_de991e5f0bb1aba9054b87ba83d821d09b0e98d5ccc3f12da805fbbf9b7dd252->leave($__internal_de991e5f0bb1aba9054b87ba83d821d09b0e98d5ccc3f12da805fbbf9b7dd252_prof);
 
     }
 
-    // line 266
+    // line 267
     public function block_body($context, array $blocks = array())
     {
-        $__internal_95db83aaecb82c413e112e6561b391e154e96cbb36f5af0a175d39d16411308e = $this->env->getExtension("native_profiler");
-        $__internal_95db83aaecb82c413e112e6561b391e154e96cbb36f5af0a175d39d16411308e->enter($__internal_95db83aaecb82c413e112e6561b391e154e96cbb36f5af0a175d39d16411308e_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "body"));
+        $__internal_10420deb9346746a5926354b5ac00607710da70e312ae86de5cd7d6c7b43e259 = $this->env->getExtension("native_profiler");
+        $__internal_10420deb9346746a5926354b5ac00607710da70e312ae86de5cd7d6c7b43e259->enter($__internal_10420deb9346746a5926354b5ac00607710da70e312ae86de5cd7d6c7b43e259_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "body"));
 
         
-        $__internal_95db83aaecb82c413e112e6561b391e154e96cbb36f5af0a175d39d16411308e->leave($__internal_95db83aaecb82c413e112e6561b391e154e96cbb36f5af0a175d39d16411308e_prof);
+        $__internal_10420deb9346746a5926354b5ac00607710da70e312ae86de5cd7d6c7b43e259->leave($__internal_10420deb9346746a5926354b5ac00607710da70e312ae86de5cd7d6c7b43e259_prof);
 
     }
 
@@ -368,7 +369,7 @@ class __TwigTemplate_9d723f2d04fd365f33f908729214b57b09fec5e4cbffb6d6910a3d3d56a
 
     public function getDebugInfo()
     {
-        return array (  349 => 266,  342 => 225,  336 => 224,  324 => 10,  301 => 267,  299 => 266,  255 => 226,  253 => 224,  36 => 10,  25 => 1,);
+        return array (  350 => 267,  343 => 225,  337 => 224,  325 => 10,  302 => 268,  300 => 267,  255 => 226,  253 => 224,  36 => 10,  25 => 1,);
     }
 }
 /* <!DOCTYPE html>*/
@@ -601,9 +602,11 @@ class __TwigTemplate_9d723f2d04fd365f33f908729214b57b09fec5e4cbffb6d6910a3d3d56a
 /*     <body>*/
 /*         <nav>*/
 /*             <ul>*/
-/* 	            <li><a href="#">Temperature</a></li>*/
-/* 	            <li><a href="#">Home</a></li>*/
-/* 	            <li><a href="#">Water</a></li>*/
+/* 				<li><a href="/">Home</a></li>*/
+/*                 <li><a href="/controls">Controls</a></li>*/
+/* 				<li><a href="/info/power">Power</a></li>*/
+/* 	            <li><a href="/info/temperature">Temperature</a></li>*/
+/* 	            <li><a href="/info/water">Water</a></li>*/
 /*             </ul>*/
 /*             <div class="button">*/
 /* 	            <a class="btn-open" href="#"></a>*/
@@ -612,22 +615,21 @@ class __TwigTemplate_9d723f2d04fd365f33f908729214b57b09fec5e4cbffb6d6910a3d3d56a
 /*         <div class="overlay">*/
 /* 	        <div class="wrap">*/
 /* 		        <ul class="wrap-nav">*/
-/* 			        <li><a href="#">Temperature</a>*/
-/* 			        <ul>*/
-/* 				        <li><a href="#">Text info</a></li>*/
-/* 				        <li><a href="#">Graphics</a></li>*/
-/* 			        </ul>*/
-/* 			        </li>*/
-/* 			        <li><a href="#">Home</a>*/
-/* 			        <ul>*/
-/* 				    </ul>*/
-/* 			        </li>*/
-/* 			        <li><a href="#">Water</a>*/
-/* 			        <ul>*/
-/* 				        <li><a href="#">Text info</a></li>*/
-/* 				        <li><a href="#">Graphics</a></li>*/
-/* 			        </ul>*/
-/* 			        </li>*/
+/* 					<li><a href="/">Home</a>*/
+/* 						<ul>*/
+/* 						</ul>*/
+/* 					</li>*/
+/*                     <li><a href="/controls">Controls</a>*/
+/*                         <ul>*/
+/*                         </ul>*/
+/*                     </li>*/
+/* 					<li><a href="/info">Info</a>*/
+/* 						<ul>*/
+/* 							<li><a href="/info/power">Power</a></li>*/
+/* 							<li><a href="/info/temperature">Temperature</a></li>*/
+/*                             <li><a href="/info/water">Water</a></li>*/
+/* 						</ul>*/
+/* 					</li>*/
 /*                     <br><br><br><br><br><br><br><br><br><br><br><br>*/
 /*                 </ul>*/
 /*                 <p>*/

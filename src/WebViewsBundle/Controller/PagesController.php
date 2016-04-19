@@ -10,30 +10,44 @@ class PagesController extends Controller
     /**
      * @Route("/")
      */
-    public function Home()
+    public function home()
     {
         return $this->render('WebViewsBundle:Pages:home.html.twig');
     }
 
     /**
-     * @Route("/power")
+     * @Route("/controls")
+     */
+    public function controls() {
+        return $this->render('WebViewsBundle:Pages:controls.html.twig');
+    }
+
+    /**
+     * @Route("info")
+     */
+    public function allInfo() {
+        return $this->render('WebViewsBundle:Pages:info.html.twig');
+    }
+
+    /**
+     * @Route("/info/power")
      */
     public function powerInfo() {
-    	return $this->render('Pages/power.html.twig');
+    	return $this->render('WebViewsBundle:Pages:power.html.twig');
     }
 
     /**
-     * @Route("/temperature")
+     * @Route("/info/temperature")
      */
     public function temperatureInfo() {
-    	return $this->render('Pages/temperature.html.twig');
+    	return $this->render('WebViewsBundle:Pages:temperature.html.twig');
     }
 
     /**
-     * @Route("/water")
+     * @Route("/info/water")
      */
     public function waterInfo() {
-    	return $this->render('Pages/water.html.twig');
+    	return $this->render('WebViewsBundle:Pages:water.html.twig');
     }
 
     
