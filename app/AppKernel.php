@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new WebSocketBundle\WebSocketBundle(),
             new RESTBundle\RESTBundle(),
             new WebViewsBundle\WebViewsBundle(),
+            new DatabaseBundle\DatabaseBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

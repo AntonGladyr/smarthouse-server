@@ -1,3 +1,8 @@
+database:
+    resource: "@DatabaseBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 web_views:
     resource: "@WebViewsBundle/Controller/"
     type:     annotation
