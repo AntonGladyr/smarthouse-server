@@ -27,7 +27,7 @@ class WebSocket implements MessageComponentInterface {
 
     public function onMessage(ConnectionInterface $connection, $msg) {
         $info = simplexml_load_string($msg);
-
+        print_r($info);
     }
 
     public function onError(ConnectionInterface $connection, \Exception $e) {

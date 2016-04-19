@@ -19,7 +19,7 @@ class ServerCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $websocket = $this->getContainer()->get('web_socket');
-        $server = IoServer::factory($websocket, 8080);
+        $server = IoServer::factory($websocket, 8001);
         $server->run();
     }
 }
