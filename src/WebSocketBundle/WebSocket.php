@@ -6,12 +6,15 @@ namespace WebSocketBundle;
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use DatabaseBundle\DB;
 
 class WebSocket implements MessageComponentInterface {
 
     protected $clients;
+    protected $DB;
 
-    public function __construct() {
+    public function __construct(DB $DB) {
+        $this->DB = $DB;
         $this->clients = new \SplObjectStorage;
     }
     
@@ -26,8 +29,9 @@ class WebSocket implements MessageComponentInterface {
     }
 
     public function onMessage(ConnectionInterface $connection, $msg) {
-        $info = simplexml_load_string($msg);
-        print_r($info);
+        // $info = simplexml_load_string($msg);
+        // print_r($info);
+        $this->DB->test();
     }
 
     public function onError(ConnectionInterface $connection, \Exception $e) {

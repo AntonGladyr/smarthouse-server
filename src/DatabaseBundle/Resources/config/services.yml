@@ -1,4 +1,4 @@
 services:
-    database.mysql:
-        class: DatabaseBundle\MySQL
+    database.access:
+        class: DatabaseBundle\DB
         arguments: [@doctrine.dbal.default_connection]

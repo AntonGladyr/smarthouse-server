@@ -5,7 +5,7 @@ namespace DatabaseBundle;
 use Doctrine\DBAL\Connection;
 
 
-class MySQL {
+class DB {
 
     private $connection;
 
@@ -14,9 +14,7 @@ class MySQL {
         $this->connection = $dbalConnection;
     }
 
-    public function example() {
-        $stmt = $this->connection->prepare("SELECT * FROM USERS WHERE id = :id");
-        $stmt->bindValue("id", "1");
-        $stmt->execute();
+    public function test() {
+        echo "DI tested!!!\n";
     }
 }
