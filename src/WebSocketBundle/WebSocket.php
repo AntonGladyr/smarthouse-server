@@ -29,9 +29,12 @@ class WebSocket implements MessageComponentInterface {
     }
 
     public function onMessage(ConnectionInterface $connection, $msg) {
-        // $info = simplexml_load_string($msg);
-        // print_r($info);
-        $this->DB->test();
+        $info = (array)simplexml_load_string($msg);
+        foreach ((array)$info["temperatures"] as $controller => $value_types) {
+            foreach ((array)$value_types as $value_type => $value) {
+                $value = (float)$value;
+            }
+        }
     }
 
     public function onError(ConnectionInterface $connection, \Exception $e) {

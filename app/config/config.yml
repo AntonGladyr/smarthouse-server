@@ -42,6 +42,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
+        default_connection: default
         driver:   pdo_mysql
         host:     localhost
         dbname:   HomeControl
