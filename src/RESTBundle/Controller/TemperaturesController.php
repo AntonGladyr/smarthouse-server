@@ -22,9 +22,7 @@ class TemperaturesController extends Controller
     public function currentTemperaturesAction()
     {
         $this->DB = $this->get("database.access");
-        
-        
-        return new Response("LOL");
+        return new Response(json_encode($this->DB->selectCurrentTemperatures()));
     }
     
     
@@ -33,7 +31,8 @@ class TemperaturesController extends Controller
      */
     public function monthTemperaturesAction()
     {
-        // ...
+        $this->DB = $this->get("database.access");
+        return new Response(json_encode($this->DB->selectMonthTemperatures()));
     }
 
 }

@@ -27,16 +27,35 @@ class DB {
     }
 
 
+    public function selectControllersWithTypes()
+    {
+        $sql = "SELECT DISTINCTROW controller, value_type FROM temperatures";
+        $request = $this->connection->executeQuery($sql);
+        return $request->fetchAll();
+    }
+
+
     public function selectCurrentTemperatures()
     {
-        //
+        $result = array();
+        $sql = "SELECT * FROM temperatures WHERE controller=:controller AND value_type=:type ORDER BY time DESC LIMIT 1";
+        foreach ($this->selectControllersWithTypes() as $row) {
+            $request = $this->connection->prepare($sql);
+            $request->bindValue("controller", $row["controller"]);
+            $request->bindValue("type", $row["value_type"]);
+            $request->execute();
+            array_push($result, $request->fetch());
+        }
+        return $result;
     }
 
 
 
     public function selectMonthTemperatures()
     {
-        //
+        $sql = "SELECT * FROM temperatures";
+        $request = $this->connection->executeQuery($sql);
+        return $request->fetchAll();
     }
 
 }
