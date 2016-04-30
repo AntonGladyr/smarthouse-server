@@ -9,6 +9,7 @@ class DB {
 
     private $connection;
 
+
     public function __construct(Connection $dbalConnection)
     {
         $this->connection = $dbalConnection;
@@ -26,25 +27,16 @@ class DB {
     }
 
 
-    public function selectCurrentTemperature(string $controller, string $type)
+    public function selectCurrentTemperatures()
     {
-        $sql = "SELECT * FROM temperatures WHERE controller=:controller AND value_type=:type LIMIT 1";
-        $request = $this->connection->prepare($sql);
-        $request->bindValue("controller", $controller);
-        $request->bindValue("type", $type);
-        $request->execute();
-        return $request->fetch();
+        //
     }
 
 
-    public function selectMonthTemperature(string $controller, string $type)
+
+    public function selectMonthTemperatures()
     {
-        $sql = "SELECT * FROM temperatures WHERE controller=:controller AND value_type=:type";
-        $request = $this->connection->prepare($sql);
-        $request->bindValue("controller", $controller);
-        $request->bindValue("type", $type);
-        $request->execute();
-        return $request->fetchAll();
+        //
     }
 
 }

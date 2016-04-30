@@ -8,10 +8,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class RestController extends Controller
 {
     /**
-     * @Route("/api")
+     * @Route("/")
      */
     public function indexAction()
     {
-        return $this->render('RESTBundle:Default:index.html.twig');
+        // Example
     }
+
+
+
 }

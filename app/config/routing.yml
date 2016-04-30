@@ -11,7 +11,7 @@ web_views:
 rest:
     resource: "@RESTBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /api
 
 web_socket:
     resource: "@WebSocketBundle/Controller/"
