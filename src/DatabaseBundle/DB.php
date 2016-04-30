@@ -14,10 +14,6 @@ class DB {
         $this->connection = $dbalConnection;
     }
 
-    public function test() {
-        echo "DB class\n";
-    }
-
 
     public function writeTemperature(string $controller, string $type, float $value)
     {
@@ -29,7 +25,6 @@ class DB {
         $request->execute();
     }
 
-    // TODO: complete selects
 
     public function selectCurrentTemperature(string $controller, string $type)
     {
@@ -38,16 +33,9 @@ class DB {
         $request->bindValue("controller", $controller);
         $request->bindValue("type", $type);
         $request->execute();
-        // ...
+        return $request->fetch();
     }
 
-    public function selectCurrentTemperatures()
-    {
-        $sql = "SELECT * FROM temperatures LIMIT 1";
-        $request = $this->connection->prepare($sql);
-        $request->execute();
-        // ...
-    }
 
     public function selectMonthTemperature(string $controller, string $type)
     {
@@ -56,15 +44,7 @@ class DB {
         $request->bindValue("controller", $controller);
         $request->bindValue("type", $type);
         $request->execute();
-        // ...
-    }
-
-    public function selectMonthTemperatures()
-    {
-        $sql = "SELECT * FROM temperatures";
-        $request = $this->connection->prepare($sql);
-        $request->execute();
-        // ...
+        return $request->fetchAll();
     }
 
 }
