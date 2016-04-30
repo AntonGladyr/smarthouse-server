@@ -16,3 +16,19 @@
 	<fan>on/off</fan>
 </command>
 
+
+
+##RESTBundle
+Do after websocket communication and web interface
+
+
+
+##WebViewsBundle
+####/home
+Schema with info and controls
+####/power
+Info about power
+####/temperature
+Info about temperature
+####/water
+Info about water
