@@ -4,6 +4,7 @@ namespace RESTBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class RestController extends Controller
 {
@@ -12,7 +13,7 @@ class RestController extends Controller
      */
     public function indexAction()
     {
-        // Example
+        return new Response("API");
     }
 
 

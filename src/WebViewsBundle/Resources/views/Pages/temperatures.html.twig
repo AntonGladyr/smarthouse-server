@@ -1,0 +1,84 @@
+{% extends 'WebViewsBundle:Pages:base.html.twig' %}
+
+{% block body %}
+    <div id="data"></div>
+    <script>
+
+        // Request
+        request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+                var data = JSON.parse(request.responseText);
+
+
+                // TODO: Move to server
+                var myDict = {};
+                for (index in data) {
+                    if (myDict[data[index]["controller"]] == undefined) {
+                        myDict[data[index]["controller"]] = {};
+                    }
+                    myDict[data[index]["controller"]][data[index]['value_type']] = data[index]['value'];
+                }
+
+                // ----------------------
+
+
+                var data_html = document.getElementById('data');
+
+
+                for (var controller in myDict) {
+                    // Wrapper
+                    var block = document.createElement('div');
+                    block.style.float = "left";
+                    block.style.width = "50%";
+
+                    var table = document.createElement('table');
+                    table.style.width = "80%";
+
+                    var header = document.createElement('h3');
+                    var header_text = document.createTextNode(controller);
+                    header.appendChild(header_text);
+                    table.appendChild(header);
+
+
+                    for (var value_type in myDict[controller]) {
+                        var row = document.createElement('tr');
+                        var column1 = document.createElement('td');
+                        var column2 = document.createElement('td');
+                        var col1_text = document.createTextNode(value_type);
+                        var col2_text = document.createTextNode(myDict[controller][value_type]+"°C");
+                        column1.appendChild(col1_text);
+                        column2.appendChild(col2_text);
+
+                        row.appendChild(column1);
+                        row.appendChild(column2);
+
+                        table.appendChild(row);
+                    }
+
+                    block.appendChild(table);
+
+                    data_html.appendChild(block);
+                }
+
+
+
+            }
+        };
+
+        request.open("GET", '/api/temperatures/current', true);
+        request.send();
+
+
+    </script>
+{% endblock %}
+
+{% block menu_title %}
+Temperatures
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+
+    </style>
+{% endblock %}

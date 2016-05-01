@@ -6,14 +6,16 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
         <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css" rel="stylesheet">
-		<link href='https://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+		{% block links %}
+		{% endblock %}
         <title>{% block title %}Home Control{% endblock %}</title>
         <style>
             body {
 	            margin:0;
 	            padding:0;
 	            background:#fff;
-	            font-family:'Raleway', sans-serif;
+	            font-family:'Open Sans', sans-serif;
 	            font-size:12px;
             }
             ul {
@@ -34,27 +36,10 @@
 	            overflow:hidden;
 	            background:none;
             }
-            nav ul {
-	            text-align:center;
+            nav p {
+                font-size: 20px;
             }
-            nav ul li {
-	            display:inline-block;
-            }
-            nav ul li a {
-	            color:#333;
-	            display:inline-block;
-	            padding:1em 3em;
-	            text-decoration:none;
-	            border-bottom:2px solid #fff;
-	            transition-property:all .2s linear 0s;
-	            -moz-transition:all .2s linear 0s;
-	            -webkit-transition:all .2s linear 0s;
-	            -o-transition:all .2s linear 0s;
-	            font-size:18px;
-            }
-            nav ul li a:hover {
-	            color: #34B484;
-            }
+
             /*styling open close button*/
             .button {
 	            display:inline;
@@ -215,9 +200,9 @@
             }
             .content {
 	            width:100%;
-	            margin-top:200px;
+	            margin-top:1px;
 	            font-size:20px;
-	            color#333;
+	            color:#333;
 	            text-align: center;
             }
         </style>
@@ -227,13 +212,7 @@
     </head>
     <body>
         <nav>
-            <ul>
-				<li><a href="/">Home</a></li>
-                <li><a href="/controls">Controls</a></li>
-				<li><a href="/info/power">Power</a></li>
-	            <li><a href="/info/temperature">Temperature</a></li>
-	            <li><a href="/info/water">Water</a></li>
-            </ul>
+            <p>{% block menu_title %} {% endblock %}</p>
             <div class="button">
 	            <a class="btn-open" href="#"></a>
             </div>
@@ -248,7 +227,7 @@
                     <li><a href="/info">Info</a>
 						<ul>
 							<li><a href="/info/power">Power</a></li>
-							<li><a href="/info/temperature">Temperature</a></li>
+							<li><a href="/info/temperatures">Temperature</a></li>
                             <li><a href="/info/water">Water</a></li>
 						</ul>
 					</li>
@@ -257,7 +236,7 @@
                         </ul>
                     </li>
 					
-                    <br><br><br><br><br><br><br><br><br><br><br><br>
+                    <br><br><br><br><br><br><br><br><br><br>
                 </ul>
                 <p>
                     Designed by Yurii Zinets and Anton Gladyr

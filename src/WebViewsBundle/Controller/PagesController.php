@@ -37,10 +37,10 @@ class PagesController extends Controller
     }
 
     /**
-     * @Route("/info/temperature")
+     * @Route("/info/temperatures")
      */
     public function temperatureInfo() {
-    	return $this->render('WebViewsBundle:Pages:temperature.html.twig');
+    	return $this->render('WebViewsBundle:Pages:temperatures.html.twig');
     }
 
     /**

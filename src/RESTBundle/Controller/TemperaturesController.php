@@ -9,12 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TemperaturesController extends Controller
 {
     private $DB;
-    
-    
-    function __construct()
-    {
 
-    }
 
     /**
      * @Route("/temperatures/current")
@@ -27,12 +22,12 @@ class TemperaturesController extends Controller
     
     
     /**
-     * @Route("/temperatures/month")
+     * @Route("/temperatures/all")
      */
     public function monthTemperaturesAction()
     {
         $this->DB = $this->get("database.access");
-        return new Response(json_encode($this->DB->selectMonthTemperatures()));
+        return new Response(json_encode($this->DB->selectAllTemperatures()));
     }
 
 }

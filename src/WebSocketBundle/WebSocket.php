@@ -29,6 +29,7 @@ class WebSocket implements MessageComponentInterface {
     }
 
     public function onMessage(ConnectionInterface $connection, $msg) {
+        echo $msg."\n";
         $info = (array)simplexml_load_string($msg);
         if (array_key_exists("temperatures", $info)) {
             echo "Writing temperatures\n";

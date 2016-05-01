@@ -51,7 +51,7 @@ class DB {
 
 
 
-    public function selectMonthTemperatures()
+    public function selectAllTemperatures()
     {
         $sql = "SELECT * FROM temperatures";
         $request = $this->connection->executeQuery($sql);
