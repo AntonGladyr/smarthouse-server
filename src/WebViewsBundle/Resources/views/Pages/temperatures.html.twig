@@ -30,10 +30,10 @@
                     // Wrapper
                     var block = document.createElement('div');
                     block.style.float = "left";
-                    block.style.width = "50%";
+                    // block.style.width = "50%";
 
                     var table = document.createElement('table');
-                    table.style.width = "80%";
+
 
                     var header = document.createElement('h3');
                     var header_text = document.createTextNode(controller);
@@ -79,6 +79,9 @@ Temperatures
 
 {% block stylesheets %}
     <style>
-
+        td {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
     </style>
 {% endblock %}

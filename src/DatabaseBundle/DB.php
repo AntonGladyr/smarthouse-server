@@ -27,6 +27,9 @@ class DB {
     }
 
 
+
+    // Remake this shit
+
     public function selectControllersWithTypes()
     {
         $sql = "SELECT DISTINCTROW controller, value_type FROM temperatures";
@@ -48,8 +51,7 @@ class DB {
         }
         return $result;
     }
-
-
+    
 
     public function selectAllTemperatures()
     {
