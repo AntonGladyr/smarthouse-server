@@ -1,74 +1,149 @@
 {% extends 'WebViewsBundle:Pages:base.html.twig' %}
 
 {% block body %}
-    <div id="data"></div>
+    <div id="info"></div>
+    <div id="chart"></div>
     <script>
 
-        // Request
-        request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
-            if (request.readyState == 4 && request.status == 200) {
-                var data = JSON.parse(request.responseText);
+        // DOM vars
+        var info_html = document.getElementById('info');
+        var chart_html = document.getElementById('chart');
 
-
-                // TODO: Move to server
-                var myDict = {};
-                for (index in data) {
-                    if (myDict[data[index]["controller"]] == undefined) {
-                        myDict[data[index]["controller"]] = {};
-                    }
-                    myDict[data[index]["controller"]][data[index]['value_type']] = data[index]['value'];
-                }
-
-                // ----------------------
-
-
-                var data_html = document.getElementById('data');
-
-
-                for (var controller in myDict) {
-                    // Wrapper
-                    var block = document.createElement('div');
-                    block.style.float = "left";
-                    // block.style.width = "50%";
-
-                    var table = document.createElement('table');
-
-
-                    var header = document.createElement('h3');
-                    var header_text = document.createTextNode(controller);
-                    header.appendChild(header_text);
-                    table.appendChild(header);
-
-
-                    for (var value_type in myDict[controller]) {
-                        var row = document.createElement('tr');
-                        var column1 = document.createElement('td');
-                        var column2 = document.createElement('td');
-                        var col1_text = document.createTextNode(value_type);
-                        var col2_text = document.createTextNode(myDict[controller][value_type]+"°C");
-                        column1.appendChild(col1_text);
-                        column2.appendChild(col2_text);
-
-                        row.appendChild(column1);
-                        row.appendChild(column2);
-
-                        table.appendChild(row);
-                    }
-
-                    block.appendChild(table);
-
-                    data_html.appendChild(block);
-                }
+        // For relevance verification
+        var current_info;
 
 
 
+        // Verify data
+        function verifyData(data) {
+            if (Object.keys(data).toString() != Object.keys(current_info).toString()) {
+                console.log("Need update!");
+                return false;
             }
-        };
+            for (var controller in data) {
+                if (Object.keys(data[controller]).toString() != Object.keys(current_info[controller]).toString()) {
+                    console.log("Need update!");
+                    return false;
+                }
+            }
+            return true;
+        }
 
-        request.open("GET", '/api/temperatures/current', true);
-        request.send();
 
+
+        // Generating current temperatures layout
+
+
+        function updateLayout() {
+            info_html.innerHTML = "";
+
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                if (request.readyState == 4 && request.status == 200) {
+                    current_info = JSON.parse(request.responseText);
+
+                    for (var controller in current_info) {
+
+                        // Div wrapper
+                        var block = document.createElement('div');
+                        block.className = "info_container";
+
+
+                        var table = document.createElement('table');
+
+
+                        // Generating header
+
+                        var header =            document.createElement('tr');
+                        var name_cell =         document.createElement('td');
+                        var chart_bt_cell =     document.createElement('td');
+
+                        var name_container =    document.createElement('h3');
+                        var chart_bt =          document.createElement('button');
+                        chart_bt.className = "chart_button";
+
+                        var name_text =         document.createTextNode(controller);
+                        var chart_bt_text =     document.createTextNode('Show chart');
+
+                        name_container.appendChild(name_text);
+                        chart_bt.appendChild(chart_bt_text);
+
+                        name_cell.appendChild(name_container);
+                        chart_bt_cell.appendChild(chart_bt);
+
+                        header.appendChild(name_cell);
+                        header.appendChild(chart_bt_cell);
+
+                        table.appendChild(header);
+
+
+                        // Generating fields for values
+
+                        for (var value_type in current_info[controller]) {
+
+                            var row = document.createElement('tr');
+
+                            var value_type_cell = document.createElement('td');
+                            var value_cell = document.createElement('td');
+
+                            var value_type_text = document.createTextNode(value_type);
+                            value_cell.innerHTML = current_info[controller][value_type]+"°С";
+                            value_cell.id = controller + ":" + value_type;
+
+                            value_type_cell.appendChild(value_type_text);
+
+                            row.appendChild(value_type_cell);
+                            row.appendChild(value_cell);
+
+                            table.appendChild(row);
+
+                        }
+
+                        block.appendChild(table);
+                        info_html.appendChild(block);
+                    }
+                }
+            };
+            request.open('GET', '/api/temperatures/current');
+            request.send();
+        }
+
+
+
+
+        // Update temperature values
+
+
+        function updateTemperatures() {
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                if (request.readyState == 4 && request.status == 200) {
+                    var data = JSON.parse(request.responseText);
+                    if (!verifyData(data)) {
+                        updateLayout();
+                    }
+
+                    else {
+                        current_info = data;
+                        for (var controller in current_info) {
+                            for (var value_type in current_info[controller]) {
+                                document.getElementById(controller+":"+value_type).innerHTML=
+                                        current_info[controller][value_type]+"°С";
+                            }
+                        }
+                    }
+
+
+                }
+            };
+            request.open('GET', '/api/temperatures/current');
+            request.send();
+        }
+
+        updateLayout();
+        updateTemperatures();
+
+        setInterval(updateTemperatures, 15000);
 
     </script>
 {% endblock %}
@@ -79,9 +154,36 @@ Temperatures
 
 {% block stylesheets %}
     <style>
+
+        .info_container {
+            margin-right: 20px;
+            margin-left: 20px;
+            float: left;
+        }
+
+        .chart_button {
+            background: transparent;
+            color: gray;
+            border: none;
+            font-size: 14px;
+        }
+        .chart_button:focus {
+            outline:none;
+        }
+
         td {
+            float: left;
             padding-left: 30px;
             padding-right: 30px;
+            padding-top: 5px;
+            margin: 0;
+            vertical-align: bottom;
         }
+        td h3 {
+            margin: 0 0 10px;
+            vertical-align: bottom;
+        }
+
+
     </style>
 {% endblock %}

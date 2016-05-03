@@ -27,6 +27,17 @@ class DB {
     }
 
 
+    public function normalizeResult($request_result) {
+        $result = array();
+        foreach ($request_result as $row) {
+            if (!array_key_exists($row['controller'], $result)) {
+                $result[$row['controller']] = array();
+            }
+            $result[$row['controller']][$row['value_type']] = $row['value'];
+        }
+        return $result;
+    }
+
 
     // Remake this shit
 
@@ -40,24 +51,35 @@ class DB {
 
     public function selectCurrentTemperatures()
     {
-        $result = array();
+        $request_result = array();
         $sql = "SELECT * FROM temperatures WHERE controller=:controller AND value_type=:type ORDER BY time DESC LIMIT 1";
         foreach ($this->selectControllersWithTypes() as $row) {
             $request = $this->connection->prepare($sql);
             $request->bindValue("controller", $row["controller"]);
             $request->bindValue("type", $row["value_type"]);
             $request->execute();
-            array_push($result, $request->fetch());
+            array_push($request_result, $request->fetch());
         }
-        return $result;
+
+        return $this->normalizeResult($request_result);
     }
     
 
     public function selectAllTemperatures()
     {
         $sql = "SELECT * FROM temperatures";
-        $request = $this->connection->executeQuery($sql);
-        return $request->fetchAll();
+        $request_result = $this->connection->executeQuery($sql);
+        return $this->normalizeResult($request_result->fetchAll());
     }
+
+    public function selectAllControllerTemperatures(string $controller) {
+        $sql = "SELECT * FROM temperatures WHERE controller=:controller";
+        $request = $this->connection->prepare($sql);
+        $request->bindValue("controller", $controller);
+        $request->execute();
+        return $this->normalizeResult($request->fetchAll());
+    }
+
+
 
 }
