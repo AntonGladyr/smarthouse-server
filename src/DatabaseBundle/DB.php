@@ -64,20 +64,14 @@ class DB {
         return $this->normalizeResult($request_result);
     }
     
-
-    public function selectAllTemperatures()
-    {
-        $sql = "SELECT * FROM temperatures";
-        $request_result = $this->connection->executeQuery($sql);
-        return $this->normalizeResult($request_result->fetchAll());
-    }
+    
 
     public function selectAllControllerTemperatures(string $controller) {
         $sql = "SELECT * FROM temperatures WHERE controller=:controller";
         $request = $this->connection->prepare($sql);
         $request->bindValue("controller", $controller);
         $request->execute();
-        return $this->normalizeResult($request->fetchAll());
+        return $request->fetchAll();
     }
 
 

@@ -8,26 +8,24 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TemperaturesController extends Controller
 {
-    private $DB;
-
 
     /**
      * @Route("/temperatures/current")
      */
     public function currentTemperaturesAction()
     {
-        $this->DB = $this->get("database.access");
-        return new Response(json_encode($this->DB->selectCurrentTemperatures()));
+        $DB = $this->get("database.access");
+        return new Response(json_encode($DB->selectCurrentTemperatures()));
     }
     
-    
+
     /**
-     * @Route("/temperatures/all")
+     * @Route("/temperatures/controller/{controller_name}")
      */
-    public function monthTemperaturesAction()
+    public function allControllerTemperaturesAction($controller_name)
     {
-        $this->DB = $this->get("database.access");
-        return new Response(json_encode($this->DB->selectAllTemperatures()));
+        $DB = $this->get("database.access");
+        return new Response(json_encode($DB->selectAllControllerTemperatures($controller_name)));
     }
 
 }
