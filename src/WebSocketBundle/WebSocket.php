@@ -28,19 +28,15 @@ class WebSocket implements MessageComponentInterface {
         $this->clients->detach($connection);
     }
 
-    public function onMessage(ConnectionInterface $connection, $msg) {
-        echo $msg."\n";
-        $info = (array)simplexml_load_string($msg);
-        if (array_key_exists("temperatures", $info)) {
-            echo "Writing temperatures\n";
-            foreach ((array)$info["temperatures"] as $controller => $value_types) {
-                foreach ((array)$value_types as $value_type => $value) {
-                    $value = (float)$value;
-                    $this->DB->writeTemperature($controller, $value_type, $value);
-                }
-            }
-        }
 
+    public function onMessage(ConnectionInterface $connection, $msg) {
+        $data = json_decode($msg, true);
+        print_r($data);
+        $time = $data['time'];
+        if (array_key_exists("temperatures", $data)) {
+            $values = $data["temperatures"];
+            $this->DB->writeTemperatures($time, $values);
+        }
     }
 
     public function onError(ConnectionInterface $connection, \Exception $e) {

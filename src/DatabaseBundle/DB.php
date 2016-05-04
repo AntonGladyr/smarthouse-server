@@ -16,14 +16,20 @@ class DB {
     }
 
 
-    public function writeTemperature(string $controller, string $type, float $value)
+    public function writeTemperatures(string $time, array $values)
     {
-        $sql = "INSERT INTO temperatures VALUES(null, :controller, :type, :value)";
-        $request = $this->connection->prepare($sql);
-        $request->bindValue("controller", $controller);
-        $request->bindValue("type", $type);
-        $request->bindValue("value", $value);
-        $request->execute();
+        $sql = "INSERT INTO temperatures VALUES(:time, :controller, :value_type, :value);";
+        foreach ($values as $controller => $value_types) {
+            foreach ($value_types as $value_type => $value) {
+                $request = $this->connection->prepare($sql);
+                $request->bindValue("time", $time);
+                $request->bindValue("controller", $controller);
+                $request->bindValue("value_type", $value_type);
+                $request->bindValue("value", $value);
+                $request->execute();
+            }
+        }
+
     }
 
 
