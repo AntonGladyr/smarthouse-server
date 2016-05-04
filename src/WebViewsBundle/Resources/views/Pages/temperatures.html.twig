@@ -7,7 +7,7 @@
 
 {% block body %}
     <div id="info"></div>
-    <div id="chart_container" align="center">
+    <div class="hidden" id="chart_container" align="center">
         <canvas id="chart"></canvas>
     </div>
     <script>
@@ -211,6 +211,11 @@
                             }]
                         }
                     });
+
+                    $("#chart_container").fadeIn();
+                    $('html,body').animate({
+                        scrollTop: $("#chart").offset().top+15
+                    });
                     
 
                 }
@@ -266,6 +271,7 @@ Temperatures
         #chart_container{
             margin: 0 auto;
             width: 70%;
+            display: none;
         }
 
 
