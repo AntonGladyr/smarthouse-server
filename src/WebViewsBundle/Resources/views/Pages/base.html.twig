@@ -13,11 +13,12 @@
         <title>{% block title %}Home Control{% endblock %}</title>
         <style>
             body {
-	            margin:0;
+	            margin:8px;
 	            padding:0;
 	            background:#fff;
 	            font-family:'Open Sans', sans-serif;
 	            font-size:12px;
+	            display: block;
             }
             ul {
 	            margin:0;
@@ -243,10 +244,8 @@
                     Designed by Yurii Zinets and Anton Gladyr
                 </p>
 	        </div>
-        </div>
-        <div class="content">
+        </div> >
 	    {% block body %}{% endblock %}
-        </div>
         <script>
             $(document).ready(function(){
                 $(".button a").click(function(){
