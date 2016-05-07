@@ -11,7 +11,7 @@ GRANT ALL ON HomeControl.* TO 'homecontrol'@'localhost';
 -- TABLES;
 
 USE HomeControl;
-CREATE TABLE temperatures(
+CREATE TABLE IF NOT EXISTS temperatures(
 	time DATETIME,
     controller VARCHAR(20),
     value_type VARCHAR(20),
@@ -23,6 +23,8 @@ CREATE TABLE temperatures(
 
 -- FUNCTIONS;
 
+
+DROP FUNCTION IF EXISTS max_time;
 DELIMITER //;
 CREATE FUNCTION max_time()
 RETURNS DATETIME
