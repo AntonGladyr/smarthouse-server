@@ -16,6 +16,8 @@ class DB {
     }
 
 
+    // Write part
+
     public function writeTemperatures(string $time, array $values)
     {
         $sql = "INSERT INTO temperatures VALUES(:time, :controller, :value_type, :value);";
@@ -31,6 +33,18 @@ class DB {
         }
 
     }
+
+
+
+
+
+
+    // Select part
+
+
+
+
+    // Temperatures
 
     public function selectCurrentTemperatures()
     {
@@ -48,13 +62,12 @@ class DB {
         return $result;
     }
 
-    public function selectAllControllerTemperatures(string $controller) {
-        $sql = "SELECT * FROM temperatures WHERE controller=:controller";
-        $request = $this->connection->prepare($sql);
-        $request->bindValue("controller", $controller);
-        $request->execute();
-        return $request->fetchAll();
+    public function selectControllerTemperatures(string $controller, int $time)
+    {
+        // ...
     }
+
+
 
 
 

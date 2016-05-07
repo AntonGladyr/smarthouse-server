@@ -7,9 +7,6 @@
 
 {% block body %}
     <div id="info"></div>
-    <div class="hidden" id="chart_container" align="center">
-        <canvas id="chart"></canvas>
-    </div>
     <script>
 
         // DOM vars
@@ -63,25 +60,19 @@
 
                         var header =            document.createElement('tr');
                         var name_cell =         document.createElement('td');
-                        var chart_bt_cell =     document.createElement('td');
 
-                        var name_container =    document.createElement('h3');
-                        var chart_bt =          document.createElement('button');
-                        chart_bt.className =    "chart_button";
-                        chart_bt.id =           controller;
-                        chart_bt.onclick =      showChart;
+                        var name_bt =           document.createElement('button');
+                        name_bt.className =    "chart_button";
+                        name_bt.id =           controller;
+                        name_bt.onclick =      showChart;
 
-                        var name_text =         document.createTextNode(controller);
-                        var chart_bt_text =     document.createTextNode('Show charts');
+                        var controller_name_text =         document.createTextNode(controller);
 
-                        name_container.appendChild(name_text);
-                        chart_bt.appendChild(chart_bt_text);
 
-                        name_cell.appendChild(name_container);
-                        chart_bt_cell.appendChild(chart_bt);
+                        name_bt.appendChild(controller_name_text);
+                        name_cell.appendChild(name_bt);
 
                         header.appendChild(name_cell);
-                        header.appendChild(chart_bt_cell);
 
                         table.appendChild(header);
 
@@ -160,6 +151,7 @@
         // Okay. Charts. Let's start!
 
         function showChart() {
+            console.log('chaaart');
             // Just think about it
         }
 
@@ -172,25 +164,30 @@ Temperatures
 
 {% block stylesheets %}
     <style>
+        #info {
+
+        }
 
         .info_container {
-            margin-top: 30px;
-            margin-right: 20px;
-            margin-left: 20px;
+            margin: 20px;
             float: left;
+            font-size: 16px;
         }
 
-        .chart_button {
+        .info_container .chart_button {
             background: transparent;
-            color: gray;
+            color: black;
             border: none;
-            font-size: 14px;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            font-weight: 600;
         }
-        .chart_button:focus {
+        .info_container .chart_button:focus {
             outline:none;
         }
 
-        td {
+        .info_container td {
             float: left;
             padding-left: 30px;
             padding-right: 30px;
@@ -198,19 +195,9 @@ Temperatures
             margin: 0;
             vertical-align: bottom;
         }
-        td h3 {
+        .info_container td h3 {
             margin: 0 0 10px;
             vertical-align: bottom;
-        }
-
-        #chart {
-            padding-top: 100px;
-        }
-
-        #chart_container{
-            margin: 0 auto;
-            width: 70%;
-            display: none;
         }
 
 
