@@ -64,7 +64,48 @@ class DB {
 
     public function selectControllerTemperatures(string $controller, int $time)
     {
-        // ...
+        switch ($time) {
+            case 7:
+                $sql = "SELECT
+                        DATE_FORMAT(time, '%y-%m-%d') as time,
+                        value_type, ROUND(AVG(value), 1) as value
+                    FROM
+                        temperatures
+                    WHERE
+                        controller = 'controller1'
+                            AND DATE_FORMAT(time, '%y-%m-%d') = DATE_FORMAT(CURDATE() - INTERVAL :interval DAY, '%y-%m-%d')
+                    GROUP BY value_type";
+
+
+                $request_result =[];
+                for ($i=0;$i<7;$i++) {
+                    $request = $this->connection->prepare($sql);
+                    $request->bindValue("interval", $i);
+                    $request->execute();
+                    array_push($request_result, $request->fetchAll());
+                }
+
+                $result = ["labels"=>[], "value_types"=>[]];
+                foreach($request_result as $day) {
+                    foreach($day as $recording) {
+                        array_push($result["labels"], $recording["time"]);
+                        if (!key_exists($recording["value_type"], $result["value_types"])) {
+                            $result["value_types"][$recording["value_type"]] = [];
+                        }
+                        array_push($result["value_types"][$recording["value_type"]], floatval($recording["value"]));
+                    }
+                }
+                $result["labels"] = array_unique($result["labels"]);
+                rsort($result["labels"]);
+
+                return $result;
+
+                break;
+            case 1:
+                break;
+            case 24:
+                break;
+        }
     }
 
 

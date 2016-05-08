@@ -1,12 +1,21 @@
 {% extends 'WebViewsBundle:Pages:base.html.twig' %}
 
 {% block links %}
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="{{ asset('Chart.js') }}"></script>
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+
 {% endblock %}
 
 {% block body %}
     <div id="info"></div>
+    <div class="row-fluid" id="summary_container">
+        <div class="span6">
+            <p>Summary</p>
+        </div>
+        <div class="span6">
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
     <script>
 
         // DOM vars
@@ -64,7 +73,7 @@
                         var name_bt =           document.createElement('button');
                         name_bt.className =    "chart_button";
                         name_bt.id =           controller;
-                        name_bt.onclick =      showChart;
+                        name_bt.onclick =      showSevenDaysChart;
 
                         var controller_name_text =         document.createTextNode(controller);
 
@@ -148,12 +157,63 @@
 
 
 
+
+
         // Okay. Charts. Let's start!
 
-        function showChart() {
-            console.log('chaaart');
-            // Just think about it
+
+
+        function showSevenDaysChart() {
+
+            // Get and prepare data
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                if (request.readyState == 4 && request.status == 200) {
+
+                    var raw_data = JSON.parse(request.responseText);
+
+                    var data = {
+                        labels:[],
+                        datasets:[]
+                    };
+
+                    data['labels'] = raw_data['labels'];
+
+
+                    for (var data_type in raw_data['value_types']) {
+                        var dataset = {
+                            label: data_type,
+                            data: raw_data['value_types'][data_type]
+                        };
+                        data['datasets'].push(dataset);
+                    }
+
+                    // Make chart
+                    var ctx = document.getElementById("chart");
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: data,
+                        options: {
+
+                        }
+                    });
+
+                    $("#summary_container").fadeIn();
+                }
+            };
+            request.open("GET", "/api/temperatures/"+this.id+"/"+"7");
+            request.send();
         }
+
+
+        function showDayChart() {
+
+        }
+
+
+
+
+
 
     </script>
 {% endblock %}
@@ -164,9 +224,6 @@ Temperatures
 
 {% block stylesheets %}
     <style>
-        #info {
-
-        }
 
         .info_container {
             margin: 20px;
@@ -199,6 +256,17 @@ Temperatures
             margin: 0 0 10px;
             vertical-align: bottom;
         }
+
+        #summary_container {
+            padding-top: 200px;
+            display: none;
+        }
+
+        #chart {
+            max-width: 600px;
+        }
+
+
 
 
     </style>

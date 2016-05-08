@@ -35,4 +35,3 @@ BEGIN
 	RETURN result;
 END//;
 DELIMITER ;
-

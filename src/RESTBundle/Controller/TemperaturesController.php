@@ -17,15 +17,14 @@ class TemperaturesController extends Controller
         $DB = $this->get("database.access");
         return new Response(json_encode($DB->selectCurrentTemperatures()));
     }
-    
 
     /**
-     * @Route("/temperatures/controller/{controller_name}")
+     * @Route("/temperatures/{controller}/{time}")
      */
-    public function allControllerTemperaturesAction($controller_name)
+    public function controllerTemperaturesByTimeAction($controller, int $time)
     {
         $DB = $this->get("database.access");
-        return new Response(json_encode($DB->selectAllControllerTemperatures($controller_name)));
+        return new Response(json_encode($DB->selectControllerTemperatures( $controller, $time )));
     }
 
 }
