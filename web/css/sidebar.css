@@ -31,7 +31,7 @@
 
 #block-wrapper {
     width: 100%;
-    position: fixed;
+    position: absolute;
     padding: 15px;
 }
 
