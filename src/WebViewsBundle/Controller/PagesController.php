@@ -40,7 +40,9 @@ class PagesController extends Controller
      * @Route("/info/temperatures")
      */
     public function temperatureInfo() {
-    	return $this->render('WebViewsBundle:Pages:temperatures.html.twig');
+        $DB = $this->get("database.access");
+    	return $this->render('WebViewsBundle:NewPages:temperatures.html.twig',
+            array('temperatures'=>$DB->selectCurrentTemperatures()));
     }
 
     /**

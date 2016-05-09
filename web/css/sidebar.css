@@ -33,6 +33,7 @@
     width: 100%;
     position: absolute;
     padding: 15px;
+    display: none;
 }
 
 #wrapper.toggled #block-wrapper {

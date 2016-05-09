@@ -72,7 +72,7 @@ class DB {
                     FROM
                         temperatures
                     WHERE
-                        controller = 'controller1'
+                        controller = :controller
                             AND DATE_FORMAT(time, '%y-%m-%d') = DATE_FORMAT(CURDATE() - INTERVAL :interval DAY, '%y-%m-%d')
                     GROUP BY value_type";
 
@@ -80,6 +80,7 @@ class DB {
                 $request_result =[];
                 for ($i=0;$i<7;$i++) {
                     $request = $this->connection->prepare($sql);
+                    $request->bindValue("controller", $controller);
                     $request->bindValue("interval", $i);
                     $request->execute();
                     array_push($request_result, $request->fetchAll());

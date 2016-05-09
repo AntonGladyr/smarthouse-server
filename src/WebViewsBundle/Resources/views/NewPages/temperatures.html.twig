@@ -1,0 +1,50 @@
+{% extends 'WebViewsBundle:NewPages:base.html.twig' %}
+
+{% block links %}
+    <script src="{{ asset('Chart.js') }}"></script>
+    <link href="{{ asset('css/temperatures.css') }}" rel="stylesheet" media="screen">
+    <script src="{{ asset('js/temperatures.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="container-fluid">
+        <div class="row" id="info-tables-wrapper">
+
+            {% for controller, value_types in temperatures %}
+
+                <div class="col-md-2" id="{{ controller }}" onclick="showSevenDaysChart(this)">
+                    <h3> {{ controller }} </h3>
+                    <table class="temperatures-table">
+
+                        {% for value_type, value in value_types %}
+                            <tr>
+                                <td> {{ value_type }} </td>
+                                <td id= "{{ value_type }}" > {{ value }}°C</td>
+                            </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
+
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div class="container-fluid" id="summary-wrapper">
+        <div class="row">
+            <div class="col-md-6">
+                    <canvas id="chart" width="400" height="250"></canvas>
+            </div>
+            <div class="col-md-6" id="summary">
+                Summary content
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
