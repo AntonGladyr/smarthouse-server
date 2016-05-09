@@ -97,7 +97,10 @@ class DB {
                     }
                 }
                 $result["labels"] = array_unique($result["labels"]);
-                rsort($result["labels"]);
+                $result["labels"] = array_reverse($result["labels"]);
+                foreach($result["value_types"] as $value_type=>$data) {
+                    $result["value_types"][$value_type] = array_reverse($data);
+                }
 
                 return $result;
 
