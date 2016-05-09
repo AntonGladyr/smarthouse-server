@@ -48,7 +48,7 @@ class DB {
 
     public function selectCurrentTemperatures()
     {
-        $sql = "SELECT * FROM temperatures WHERE time=max_time()";
+        $sql = "SELECT * FROM temperatures WHERE time=(SELECT MAX(time) FROM temperatures)";
         $request = $this->connection->executeQuery($sql);
         $request_result = $request->fetchAll();
 
