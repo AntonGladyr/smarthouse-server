@@ -2,8 +2,7 @@
 -- USER
 
 CREATE DATABASE IF NOT EXISTS HomeControl;
-CREATE USER IF NOT EXISTS 'homecontrol'@'localhost' IDENTIFIED BY 'unicorn';
-GRANT ALL ON HomeControl.* TO 'homecontrol'@'localhost';
+GRANT ALL ON HomeControl.* TO 'homecontrol'@'localhost' IDENTIFIED BY 'unicorn';
 
 
 
