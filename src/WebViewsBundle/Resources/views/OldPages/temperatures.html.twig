@@ -1,0 +1,273 @@
+{% extends 'WebViewsBundle:Pages:base.html.twig' %}
+
+{% block links %}
+    <script src="{{ asset('Chart.js') }}"></script>
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+
+{% endblock %}
+
+{% block body %}
+    <div id="info"></div>
+    <div class="row-fluid" id="summary_container">
+        <div class="span6">
+            <p>Summary</p>
+        </div>
+        <div class="span6">
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
+    <script>
+
+        // DOM vars
+        var info_html = document.getElementById('info');
+        var chart_html = document.getElementById('chart');
+
+        // For relevance verification
+        var current_info;
+
+
+
+        // Verify data
+        function verifyData(data) {
+            if (Object.keys(data).toString() != Object.keys(current_info).toString()) {
+                console.log("Need update!");
+                return false;
+            }
+            for (var controller in data) {
+                if (Object.keys(data[controller]).toString() != Object.keys(current_info[controller]).toString()) {
+                    console.log("Need update!");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+
+        // Generating current temperatures layout
+
+
+        function updateLayout() {
+            info_html.innerHTML = "";
+
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                if (request.readyState == 4 && request.status == 200) {
+                    current_info = JSON.parse(request.responseText);
+
+                    for (var controller in current_info) {
+
+                        // Div wrapper
+                        var block = document.createElement('div');
+                        block.className = "info_container";
+
+
+                        var table = document.createElement('table');
+
+
+                        // Generating header
+
+                        var header =            document.createElement('tr');
+                        var name_cell =         document.createElement('td');
+
+                        var name_bt =           document.createElement('button');
+                        name_bt.className =    "chart_button";
+                        name_bt.id =           controller;
+                        name_bt.onclick =      showSevenDaysChart;
+
+                        var controller_name_text =         document.createTextNode(controller);
+
+
+                        name_bt.appendChild(controller_name_text);
+                        name_cell.appendChild(name_bt);
+
+                        header.appendChild(name_cell);
+
+                        table.appendChild(header);
+
+
+                        // Generating fields for values
+
+                        for (var value_type in current_info[controller]) {
+
+                            var row = document.createElement('tr');
+
+                            var value_type_cell = document.createElement('td');
+                            var value_cell = document.createElement('td');
+
+                            var value_type_text = document.createTextNode(value_type);
+                            value_cell.innerHTML = current_info[controller][value_type]+"°С";
+                            value_cell.id = controller + ":" + value_type;
+
+                            value_type_cell.appendChild(value_type_text);
+
+                            row.appendChild(value_type_cell);
+                            row.appendChild(value_cell);
+
+                            table.appendChild(row);
+
+                        }
+
+                        block.appendChild(table);
+                        info_html.appendChild(block);
+                    }
+                }
+            };
+            request.open('GET', '/api/temperatures/current');
+            request.send();
+        }
+
+
+
+
+        // Update temperature values
+
+
+        function updateTemperatures() {
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                if (request.readyState == 4 && request.status == 200) {
+                    var data = JSON.parse(request.responseText);
+                    if (!verifyData(data)) {
+                        updateLayout();
+                    }
+
+                    else {
+                        current_info = data;
+                        for (var controller in current_info) {
+                            for (var value_type in current_info[controller]) {
+                                document.getElementById(controller+":"+value_type).innerHTML=
+                                        current_info[controller][value_type]+"°С";
+                            }
+                        }
+                    }
+
+
+                }
+            };
+            request.open('GET', '/api/temperatures/current');
+            request.send();
+        }
+
+        updateLayout();
+        updateTemperatures();
+
+        setInterval(updateTemperatures, 15000);
+
+
+
+
+
+
+        // Okay. Charts. Let's start!
+
+
+
+        function showSevenDaysChart() {
+
+            // Get and prepare data
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                if (request.readyState == 4 && request.status == 200) {
+
+                    var raw_data = JSON.parse(request.responseText);
+
+                    var data = {
+                        labels:[],
+                        datasets:[]
+                    };
+
+                    data['labels'] = raw_data['labels'];
+
+
+                    for (var data_type in raw_data['value_types']) {
+                        var dataset = {
+                            label: data_type,
+                            data: raw_data['value_types'][data_type]
+                        };
+                        data['datasets'].push(dataset);
+                    }
+
+                    // Make chart
+                    var ctx = document.getElementById("chart");
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: data,
+                        options: {
+
+                        }
+                    });
+
+                    $("#summary_container").fadeIn();
+                }
+            };
+            request.open("GET", "/api/temperatures/"+this.id+"/"+"7");
+            request.send();
+        }
+
+
+        function showDayChart() {
+
+        }
+
+
+
+
+
+
+    </script>
+{% endblock %}
+
+{% block menu_title %}
+Temperatures
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+
+        .info_container {
+            margin: 20px;
+            float: left;
+            font-size: 16px;
+        }
+
+        .info_container .chart_button {
+            background: transparent;
+            color: black;
+            border: none;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .info_container .chart_button:focus {
+            outline:none;
+        }
+
+        .info_container td {
+            float: left;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 5px;
+            margin: 0;
+            vertical-align: bottom;
+        }
+        .info_container td h3 {
+            margin: 0 0 10px;
+            vertical-align: bottom;
+        }
+
+        #summary_container {
+            padding-top: 200px;
+            display: none;
+        }
+
+        #chart {
+            max-width: 600px;
+        }
+
+
+
+
+    </style>
+{% endblock %}
