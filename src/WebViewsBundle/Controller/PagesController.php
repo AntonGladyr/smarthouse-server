@@ -12,7 +12,7 @@ class PagesController extends Controller
      */
     public function home()
     {
-        return $this->render('WebViewsBundle:NewPages:home.html.twig');
+        return $this->render('WebViewsBundle:Pages:home.html.twig');
     }
 
     /**
@@ -41,7 +41,7 @@ class PagesController extends Controller
      */
     public function temperatureInfo() {
         $DB = $this->get("database.access");
-    	return $this->render('WebViewsBundle:NewPages:temperatures.html.twig',
+    	return $this->render('WebViewsBundle:Pages:temperatures.html.twig',
             array('temperatures'=>$DB->selectCurrentTemperatures()));
     }
 
