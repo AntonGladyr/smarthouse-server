@@ -3,11 +3,11 @@ function currentTemperaturesUpdate() {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
-            console.log('Update!');
             var data = JSON.parse(request.responseText);
             for (var controller in data) {
                 for (var value_type in data[controller]) {
-                    $("#"+value_type).innerHTML = data[controller][value_type]+"°C";
+                    console.log(data[controller][value_type]);
+                    document.getElementById(controller+":"+value_type).innerHTML = data[controller][value_type]+"°C";
                 }
             }
 
@@ -51,4 +51,4 @@ function showSevenDaysChart(item) {
     $('#summary-wrapper').fadeIn();
 }
 
-setInterval(currentTemperaturesUpdate, 15000);
+setInterval(currentTemperaturesUpdate, 3000);

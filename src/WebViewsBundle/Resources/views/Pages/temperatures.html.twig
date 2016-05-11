@@ -21,7 +21,7 @@
                         {% for value_type, value in value_types %}
                             <tr>
                                 <td> {{ value_type }} </td>
-                                <td id= "{{ value_type }}" > {{ value }}°C</td>
+                                <td id= "{{ controller }}:{{ value_type }}" > {{ value }}°C</td>
                             </tr>
                         {% endfor %}
 
