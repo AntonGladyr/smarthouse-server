@@ -3,18 +3,17 @@
 
 namespace WebSocketBundle;
 
-
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
-use DatabaseBundle\DB;
+use DatabaseBundle\TemperaturesAccess;
 
 class WebSocket implements MessageComponentInterface {
 
     protected $clients;
     protected $db_temperatures;
 
-    public function __construct(DB $DB) {
-        $this->db_temperatures = $DB;
+    public function __construct(TemperaturesAccess $db_temperatures) {
+        $this->db_temperatures = $db_temperatures;
         $this->clients = new \SplObjectStorage;
     }
     
