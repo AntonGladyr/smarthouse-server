@@ -1,5 +1,6 @@
+<?php
 // src/SecurityBundle/WebserviceUser.php
-namespace AppBundle\Security\User;
+namespace UserBundle;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
