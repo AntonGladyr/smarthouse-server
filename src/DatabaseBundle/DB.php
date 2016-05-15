@@ -106,6 +106,34 @@ class DB {
 
                 break;
             case 1:
+                $sql = "SELECT
+                        DATE_FORMAT(time, '-%d %H') as time,
+                        value_type, ROUND(AVG(value), 1) as value
+                    FROM
+                        temperatures
+                    WHERE
+                        controller = :controller
+                            AND DATE_FORMAT(time, '-%d %H') = DATE_FORMAT(CURDATE() - INTERVAL :interval HOUR, '-%d %H')
+                    GROUP BY value_type";
+                
+                $request_result = [];
+                $request_result =[];
+                for ($i=0;$i<24;$i++) {
+                    $request = $this->connection->prepare($sql);
+                    $request->bindValue("controller", $controller);
+                    $request->bindValue("interval", $i);
+                    $request->execute();
+                    array_push($request_result, $request->fetchAll());
+                }
+
+                $sorted = [];
+                $i = 0;
+                while ($request_result) {
+                    $hour = array_shift($request_result);
+                    
+                }
+
+
                 break;
             case 24:
                 break;
