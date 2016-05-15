@@ -1,5 +1,5 @@
 <?php
-// src/SecurityBundle/User.php
+
 namespace UserBundle;
 
 use Symfony\Component\Security\Core\User\UserInterface;
