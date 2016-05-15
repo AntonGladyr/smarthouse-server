@@ -77,6 +77,7 @@ class DB {
                     GROUP BY value_type";
 
 
+
                 $request_result =[];
                 for ($i=0;$i<7;$i++) {
                     $request = $this->connection->prepare($sql);
@@ -85,6 +86,7 @@ class DB {
                     $request->execute();
                     array_push($request_result, $request->fetchAll());
                 }
+
 
                 $result = ["labels"=>[], "value_types"=>[]];
                 foreach($request_result as $day) {
@@ -106,7 +108,34 @@ class DB {
 
                 break;
             case 1:
-                break;
+                /*$sql = "SELECT
+                        DATE_FORMAT(time, '%y-%m-%d') as time,
+                        value_type, ROUND(AVG(value), 1) as value
+                    FROM
+                        temperatures
+                    WHERE
+                        controller = :controller
+                            AND DATE_FORMAT(time, '%y-%m-%d') = DATE_FORMAT(CURDATE() - INTERVAL :interval DAY, '%y-%m-%d')
+                    GROUP BY value_type";
+
+
+
+                $request_result =[];
+                for ($i=0;$i<7;$i++) {
+                    $request = $this->connection->prepare($sql);
+                    $request->bindValue("controller", $controller);
+                    $request->bindValue("interval", $i);
+                    $request->execute();
+                    array_push($request_result, $request->fetchAll());
+                }
+
+                $myResult=[]; $count = 0;
+                for ($i=0;$i<8;$i+=3)
+                {
+                    $myResult[$count] = ($request_result[$i] + $request_result[$i+1] + $request_result[$i+2])/3;
+                    $count++;
+                }
+                break;*/
             case 24:
                 break;
         }
