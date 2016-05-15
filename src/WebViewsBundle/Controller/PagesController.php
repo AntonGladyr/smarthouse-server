@@ -52,5 +52,10 @@ class PagesController extends Controller
     	return $this->render('WebViewsBundle:Pages:water.html.twig');
     }
 
-    
+    /**
+     * @Route("/signin")
+     */
+    public function signIn() {
+        return $this->render('WebViewsBundle:Pages:signin.html.twig');
+    }  
 }
