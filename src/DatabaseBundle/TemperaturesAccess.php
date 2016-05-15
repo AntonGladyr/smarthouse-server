@@ -4,19 +4,14 @@ namespace DatabaseBundle;
 
 use Doctrine\DBAL\Connection;
 
-
-class DB {
+class TemperaturesAccess {
 
     private $connection;
-
 
     public function __construct(Connection $dbalConnection)
     {
         $this->connection = $dbalConnection;
     }
-
-
-    // Write part
 
     public function writeTemperatures(string $time, array $values)
     {
@@ -31,20 +26,8 @@ class DB {
                 $request->execute();
             }
         }
-
     }
 
-
-
-
-
-
-    // Select part
-
-
-
-
-    // Temperatures
 
     public function selectCurrentTemperatures()
     {
@@ -140,9 +123,4 @@ class DB {
                 break;
         }
     }
-
-
-
-
-
 }

@@ -16,7 +16,10 @@ CREATE TABLE IF NOT EXISTS temperatures(
     value_type VARCHAR(20),
     value FLOAT
 );
-
+CREATE TABLE IF NOT EXISTS users(
+  username VARCHAR(20),
+  password TEXT
+);
 
 
 

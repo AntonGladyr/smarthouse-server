@@ -11,10 +11,10 @@ use DatabaseBundle\DB;
 class WebSocket implements MessageComponentInterface {
 
     protected $clients;
-    protected $DB;
+    protected $db_temperatures;
 
     public function __construct(DB $DB) {
-        $this->DB = $DB;
+        $this->db_temperatures = $DB;
         $this->clients = new \SplObjectStorage;
     }
     
@@ -35,7 +35,7 @@ class WebSocket implements MessageComponentInterface {
         $time = $data['time'];
         if (array_key_exists("temperatures", $data)) {
             $values = $data["temperatures"];
-            $this->DB->writeTemperatures($time, $values);
+            $this->db_temperatures->writeTemperatures($time, $values);
         }
     }
 

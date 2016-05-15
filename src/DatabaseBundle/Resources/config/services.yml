@@ -1,4 +1,7 @@
 services:
-    database.access:
-        class: DatabaseBundle\DB
+    temperatures.access:
+        class: DatabaseBundle\TemperaturesAccess
+        arguments: [@doctrine.dbal.default_connection]
+    users.access:
+        class: DatabaseBundle\UsersAccess
         arguments: [@doctrine.dbal.default_connection]
