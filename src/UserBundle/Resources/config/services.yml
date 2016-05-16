@@ -3,5 +3,5 @@ services:
 #        class: UserBundle\Example
 #        arguments: ["@service_id", "plain_value", %parameter%]
     user.provider:
-        class: userBundle\UserProvider
+        class: UserBundle\UserProvider
         arguments: [@users.access]

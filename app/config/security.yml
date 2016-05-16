@@ -5,7 +5,15 @@ security:
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    admin:
+                        password: admin
+                        roles: ROLE_ADMIN
+        main_user:
+            id: user.provider
+
+
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -13,8 +21,24 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        login:
+            pattern: ^/login$
+            security: false
+
         main:
-            anonymous: ~
+            pattern: ^/
+            http_basic:
+                provider: in_memory
+            form_login:
+                check_path: /login
+                login_path: /login
+            security: true
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, role: ROLE_ADMIN }
+
+
             # activate different ways to authenticate
 
             # http_basic: ~

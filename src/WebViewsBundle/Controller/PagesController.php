@@ -4,6 +4,7 @@ namespace WebViewsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class PagesController extends Controller
 {
@@ -53,9 +54,14 @@ class PagesController extends Controller
     }
 
     /**
-     * @Route("/signin")
+     * @Route("/login")
      */
-    public function signIn() {
-        return $this->render('WebViewsBundle:Pages:signin.html.twig');
+    public function signIn(Request $request) {
+        $authenticationUtils = $this->get('security.authentication_utils');
+        $error = $authenticationUtils->getLastAuthenticationError();
+        dump($error);
+
+        return $this->render('WebViewsBundle:Pages:signin.html.twig',
+            array('error' => $error));
     }  
 }

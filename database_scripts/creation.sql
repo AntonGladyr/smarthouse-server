@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS temperatures(
 );
 CREATE TABLE IF NOT EXISTS users(
   username VARCHAR(20),
-  password TEXT
+  password TEXT,
+  salt TEXT
 );
 
 
