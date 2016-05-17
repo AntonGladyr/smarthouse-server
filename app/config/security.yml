@@ -30,8 +30,8 @@ security:
             http_basic:
                 provider: in_memory
             form_login:
-                check_path: /login
                 login_path: /login
+                check_path: /login_check
             security: true
 
     access_control:
