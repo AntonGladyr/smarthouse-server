@@ -38,15 +38,24 @@ class WebSocket implements MessageComponentInterface {
         }
 
         print_r($data);
-        
 
-        $time = $data['time'];
 
-        // ...
+
+        // Save data to DB
+        if ($data['type'] == 'data') {
+            // ...
+        }
+
+        // Broadcast to all clients
+        if ($data['type'] == 'command') {
+            $this->broadcastMessage($msg);
+        }
     }
 
-    public function sendMessage($msg) {
-        // ...
+    public function broadcastMessage($msg) {
+        foreach ($this->clients as $client) {
+            $client->send($msg);
+        }
     }
 
     public function onError(ConnectionInterface $connection, \Exception $e) {
