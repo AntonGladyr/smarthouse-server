@@ -29,6 +29,9 @@ security:
             pattern: ^/
             http_basic:
                 provider: in_memory
+            logout:
+                path: /logout
+                target: /
             form_login:
                 login_path: /login
                 check_path: /login_check
