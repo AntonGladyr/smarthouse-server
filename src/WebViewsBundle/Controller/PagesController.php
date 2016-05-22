@@ -17,37 +17,23 @@ class PagesController extends Controller
     }
 
     /**
-     * @Route("/controls")
-     */
-    public function controls() {
-        return $this->render('WebViewsBundle:Pages:controls.html.twig');
-    }
-
-    /**
-     * @Route("info")
-     */
-    public function allInfo() {
-        return $this->render('WebViewsBundle:Pages:info.html.twig');
-    }
-
-    /**
-     * @Route("/info/power")
+     * @Route("/power")
      */
     public function powerInfo() {
     	return $this->render('WebViewsBundle:Pages:power.html.twig');
     }
 
     /**
-     * @Route("/info/temperatures")
+     * @Route("/air")
      */
     public function temperatureInfo() {
         $db_temperatures = $this->get("temperatures.access");
-    	return $this->render('WebViewsBundle:Pages:temperatures.html.twig',
+    	return $this->render('WebViewsBundle:Pages:air.html.twig',
             array('temperatures'=>$db_temperatures->selectCurrentTemperatures()));
     }
 
     /**
-     * @Route("/info/water")
+     * @Route("/water")
      */
     public function waterInfo() {
     	return $this->render('WebViewsBundle:Pages:water.html.twig');
@@ -59,9 +45,8 @@ class PagesController extends Controller
     public function signIn(Request $request) {
         $authenticationUtils = $this->get('security.authentication_utils');
         $error = $authenticationUtils->getLastAuthenticationError();
-        dump($error);
 
-        return $this->render('WebViewsBundle:Pages:signin.html.twig',
+        return $this->render('WebViewsBundle:Pages:login.html.twig',
             array('error' => $error));
-    }  
+    }
 }
