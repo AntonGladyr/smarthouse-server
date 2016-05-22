@@ -2,13 +2,19 @@
 
 namespace WebSocketBundle\Command;
 
+use DatabaseBundle\TemperaturesAccess;
+use Ratchet\Http\HttpServer;
+use Ratchet\WebSocket\WsServer;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Ratchet\Server\IoServer;
 
+use WebSocketBundle\WebSocket;
+
 class ServerCommand extends ContainerAwareCommand
 {
+
     protected function configure()
     {
         $this
@@ -18,8 +24,14 @@ class ServerCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $websocket = $this->getContainer()->get('web_socket');
-        $server = IoServer::factory($websocket, 8001);
+        $db_temperatures = $this->getContainer()->get('temperatures.access');
+
+        /** @var TemperaturesAccess $db_temperatures */
+        $ws = new WsServer(new WebSocket($db_temperatures));
+        $ws->disableVersion(0); // old, bad, protocol version
+
+        // Make sure you're running this as root
+        $server = IoServer::factory(new HttpServer($ws), 8001);
         $server->run();
     }
 }

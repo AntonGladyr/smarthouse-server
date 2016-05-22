@@ -5,3 +5,6 @@ services:
     web_socket:
         class: WebSocketBundle\WebSocket
         arguments: [@temperatures.access]
+    web_socket_command:
+        class: WebSocketBundle\Command\ServerCommand
+        arguments: [@temperatures.access]
