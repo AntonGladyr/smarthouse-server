@@ -4,7 +4,6 @@ imports:
     - { resource: services.yml }
     - { resource: "@DatabaseBundle/Resources/config/services.yml" }
     - { resource: "@WebSocketBundle/Resources/config/services.yml" }
-    - { resource: "@RESTBundle/Resources/config/services.yml" }
     - { resource: "@WebViewsBundle/Resources/config/services.yml" }
     - { resource: "@UserBundle/Resources/config/services.yml" }
 

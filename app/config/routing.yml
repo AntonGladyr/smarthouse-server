@@ -13,11 +13,6 @@ web_views:
     type:     annotation
     prefix:   /
 
-rest:
-    resource: "@RESTBundle/Controller/"
-    type:     annotation
-    prefix:   /api
-
 web_socket:
     resource: "@WebSocketBundle/Controller/"
     type:     annotation

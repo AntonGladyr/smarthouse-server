@@ -41,13 +41,16 @@ class WebSocket implements MessageComponentInterface {
 
 
 
-        // Save data to DB
-        if ($data['type'] == 'data') {
-            // ...
+        // Handle server data
+        if ($data['destination'] == 'server') {
+            // Write to DB
+            if ($data['type'] == 'data/database') {
+                // ...
+            }
         }
 
-        // Broadcast to all clients
-        if ($data['type'] == 'command') {
+        // Broadcast
+        else if ($data['destination'] == 'client') {
             $this->broadcastMessage($msg);
         }
     }
