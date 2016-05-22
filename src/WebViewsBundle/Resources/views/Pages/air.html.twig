@@ -2,52 +2,24 @@
 
 {% block links %}
     <script src="{{ asset('Chart.js') }}"></script>
-    <link href="{{ asset('css/temperatures.css') }}" rel="stylesheet" media="screen">
-    <script src="{{ asset('js/temperatures.js') }}"></script>
+    <link href="{{ asset('css/air.css') }}" rel="stylesheet" media="screen">
+    <script src="{{ asset('js/air.js') }}"></script>
 {% endblock %}
 
 {% block content %}
 
 
-    <div class="container-fluid">
-        <div class="row" id="info-tables-wrapper">
-
-            {% for controller, value_types in temperatures %}
-
-                <div class="col-md-2" id="{{ controller }}" onclick="showSevenDaysChart(this)">
-                    <h3> {{ controller }} </h3>
-                    <table class="temperatures-table">
-
-                        {% for value_type, value in value_types %}
-                            <tr>
-                                <td> {{ value_type }} </td>
-                                <td id= "{{ controller }}:{{ value_type }}" > {{ value }}°C</td>
-                            </tr>
-                        {% endfor %}
-
-                    </table>
-                </div>
-
-
-            {% endfor %}
-
+        <div class="column">
+            <h1 align="center">Controllers info</h1>
         </div>
-    </div>
 
-    <div class="container-fluid" id="summary-wrapper">
-        <div class="row">
-            <div class="col-md-6">
-                    <button onclick="showSevenDaysChart()">7 days</button>
-                    <button onclick="showDayChart()">1 day</button>
-                    <button onclick="showHourChart()">1 hour</button>
-                    <canvas id="chart" width="400" height="250"></canvas>
-            </div>
-            <div class="col-md-6" id="summary">
-                Summary content
-            </div>
+        <div class="column">
+            <h1 align="center">Values</h1>
         </div>
-    </div>
 
+        <div class="column">
+            <h1 align="center">Controls</h1>
+        </div>
 
 
 {% endblock %}

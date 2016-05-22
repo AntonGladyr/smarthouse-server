@@ -29,17 +29,24 @@ class WebSocket implements MessageComponentInterface {
 
 
     public function onMessage(ConnectionInterface $connection, $msg) {
+        echo "Message handled:\n";
         echo $msg;
+
         $data = json_decode($msg, true);
         if (!$data) {
             return ;
         }
+
         print_r($data);
+        
+
         $time = $data['time'];
-        if (array_key_exists("temperatures", $data)) {
-            $values = $data["temperatures"];
-            $this->db_temperatures->writeTemperatures($time, $values);
-        }
+
+        // ...
+    }
+
+    public function sendMessage($msg) {
+        // ...
     }
 
     public function onError(ConnectionInterface $connection, \Exception $e) {
