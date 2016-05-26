@@ -50,7 +50,7 @@ class WebSocket implements MessageComponentInterface {
         }
 
         // Broadcast
-        else if ($data['destination'] == 'client') {
+        else {
             $this->broadcastMessage($msg);
         }
     }

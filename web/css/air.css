@@ -1,14 +1,12 @@
-.column {
-    width: 33%;
-    float: left
+.col-md-4 {
+    margin-bottom: 50px;
 }
 
-.h2 {
-
+.data-table {
+    margin-top: 30px;
 }
 
-@media (max-width: 768px) {
-    .column {
-        width: 100%;
-    }
+.data-table td {
+    padding-left: 0;
+    padding-right: 80px;
 }

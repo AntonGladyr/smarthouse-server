@@ -1,74 +1,45 @@
-
-function currentTemperaturesUpdate() {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if (request.readyState == 4 && request.status == 200) {
-            var data = JSON.parse(request.responseText);
-            for (var controller in data) {
-                for (var value_type in data[controller]) {
-                    document.getElementById(controller+":"+value_type).innerHTML = data[controller][value_type]+"°C";
-                }
-            }
-
-        }
-    };
-    request.open('GET', '/api/temperatures/current');
-    request.send();
-}
-
-
-
-
-var current_controller;
-
-function showSevenDaysChart(item) {
-    if (!current_controller) {
-        current_controller = item.id;
+function generate_table(data) {
+    var table = document.createElement('table');
+    table.className = 'data-table';
+    for (var type in data) {
+        console.log(type);
+        var row = table.insertRow();
+        row.insertCell(0).innerHTML = type+":";
+        row.insertCell(1).innerHTML = data[type];
     }
-    $.get('/api/temperatures/'+current_controller+'/7', function(data, status) {
-        if (status == 'success') {
-            var request_data = JSON.parse(data);
+    return table;
+}
 
-            // Preparing data
-            var chart_data = {
-                'labels': [],
-                'datasets': []
-            };
 
-            chart_data['labels'] = request_data['labels'];
-            for (var value_type in request_data['value_types']) {
-                chart_data['datasets'].push({
-                    label: value_type,
-                    data: request_data['value_types'][value_type]
-                });
+var websocket = new WebSocket("ws://127.0.0.1:8001");
+
+websocket.onmessage = function (event) {
+    console.log(event.data);
+    var message = JSON.parse(event.data);
+    if (message['destination'] != 'client') {
+        return;
+    }
+
+    switch (message['type']) {
+        case 'data/air/static':
+            var column = document.getElementById('controllers-info');
+            column.innerHTML = null;
+            var data = message['data'];
+
+            for (var controller in data) {
+                var table = generate_table(data[controller]);
+                var row = table.insertRow(0);
+                row.insertCell(0).innerHTML = 'Controller:';
+                row.insertCell(1).innerHTML = controller;
+                column.appendChild(table);
             }
+            break;
+        case 'data/air/dynamic':
+            var column = document.getElementById('values');
+            column.innerHTML = null;
+            var data = message['data'];
 
-            // Making chart
-
-            var ctx = $("#chart");
-            var chart = new Chart(ctx, {
-                type: 'line',
-                data: chart_data,
-                options: {
-
-                }
-            });
-        }
-    });
-    $('#summary-wrapper').fadeIn();
-}
-
-
-
-function showDayChart() {
-    console.log(current_controller);
-}
-
-
-
-function showHourChart() {
-    console.log(current_controller);
-}
-
-
-setInterval(currentTemperaturesUpdate, 3000);
+            column.appendChild(generate_table(data));
+            break;
+    }
+};
