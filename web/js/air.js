@@ -34,12 +34,18 @@ websocket.onmessage = function (event) {
                 column.appendChild(table);
             }
             break;
+
         case 'data/air/dynamic':
             var column = document.getElementById('values');
             column.innerHTML = null;
             var data = message['data'];
-
             column.appendChild(generate_table(data));
             break;
     }
 };
+
+var static_data_request = {
+    'destination':'sensors',
+    'type':'request/data/air/static'
+};
+websocket.send(JSON.stringify(static_data_request));
