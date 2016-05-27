@@ -9,8 +9,14 @@ use DatabaseBundle\TemperaturesAccess;
 
 class WebSocket implements MessageComponentInterface {
 
+    /**
+     * @var ConnectionInterface
+     */
+    protected $sensors;
     protected $clients;
     protected $db_temperatures;
+
+    protected $static_info;
 
     public function __construct(TemperaturesAccess $db_temperatures) {
         $this->db_temperatures = $db_temperatures;
@@ -31,34 +37,37 @@ class WebSocket implements MessageComponentInterface {
     public function onMessage(ConnectionInterface $connection, $msg) {
         echo "Message handled:\n";
         echo $msg;
-
-        $data = json_decode($msg, true);
-        if (!$data) {
+        $request = json_decode($msg, true);
+        if (!$request) {
             return ;
         }
 
-        print_r($data);
+        if ($request['destination'] == 'server') {
+            if ($request['type'] == 'init/sensors') {
+                $this->static_info = $request['data'];
+                $this->sensors = $connection;
+            }
 
-
-
-        // Handle server data
-        if ($data['destination'] == 'server') {
-            // Write to DB
-            if ($data['type'] == 'data/database') {
-                // ...
+            else if ($request['type'] == 'request/data/air/static') {
+                $response = array(
+                    'destination'=>'client',
+                    'type'=>'data/air/static',
+                    'data'=>$this->static_info['air']
+                );
+                $connection->send(json_encode($response));
             }
         }
 
-        // Broadcast
-        else {
-            $this->broadcastMessage($msg);
+        else if ($request['destination'] == 'client') {
+            foreach ($this->clients as $client) {
+                $client->send($msg);
+            }
         }
-    }
 
-    public function broadcastMessage($msg) {
-        foreach ($this->clients as $client) {
-            $client->send($msg);
+        else if ($request['destination'] == 'sensors') {
+            $this->sensors->send($msg);
         }
+
     }
 
     public function onError(ConnectionInterface $connection, \Exception $e) {

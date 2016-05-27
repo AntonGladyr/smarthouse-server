@@ -13,6 +13,14 @@ function generate_table(data) {
 
 var websocket = new WebSocket("ws://127.0.0.1:8001");
 
+websocket.on_open = function() {
+    var static_data_request = {
+        'destination':'sensors',
+        'type':'request/data/air/static'
+    };
+    websocket.send(JSON.stringify(static_data_request));
+};
+
 websocket.onmessage = function (event) {
     console.log(event.data);
     var message = JSON.parse(event.data);
@@ -44,8 +52,3 @@ websocket.onmessage = function (event) {
     }
 };
 
-var static_data_request = {
-    'destination':'sensors',
-    'type':'request/data/air/static'
-};
-websocket.send(JSON.stringify(static_data_request));
