@@ -10,7 +10,7 @@ function generate_table(types, values) {
 }
 
 
-var websocket = new WebSocket("ws://127.0.0.1:110");
+var websocket = new WebSocket("ws://smarthouse.onlini.co:110");
 
 websocket.onopen = function() {
     var static_data_request = {
