@@ -10,7 +10,7 @@ function generate_table(types, values) {
 }
 
 
-var websocket = new WebSocket("ws://127.0.0.1:8001");
+var websocket = new WebSocket("ws://smarthouse.php.onlini.co:8001");
 
 websocket.onopen = function() {
     var static_data_request = {
