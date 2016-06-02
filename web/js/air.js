@@ -1,11 +1,10 @@
-function generate_table(data) {
+function generate_table(types, values) {
     var table = document.createElement('table');
     table.className = 'data-table';
-    for (var type in data) {
-        console.log(type);
+    for (var i = 0; i < types.length; i++) {
         var row = table.insertRow();
-        row.insertCell(0).innerHTML = type+":";
-        row.insertCell(1).innerHTML = data[type];
+        row.insertCell(0).innerHTML = types[i];
+        row.insertCell(1).innerHTML = values[i];
     }
     return table;
 }
@@ -13,9 +12,9 @@ function generate_table(data) {
 
 var websocket = new WebSocket("ws://127.0.0.1:8001");
 
-websocket.on_open = function() {
+websocket.onopen = function() {
     var static_data_request = {
-        'destination':'sensors',
+        'destination':'server',
         'type':'request/data/air/static'
     };
     websocket.send(JSON.stringify(static_data_request));
@@ -35,20 +34,19 @@ websocket.onmessage = function (event) {
             var data = message['data'];
 
             for (var controller in data) {
-                var table = generate_table(data[controller]);
+                var table = generate_table(data[controller]['types'], data[controller]['values']);
                 var row = table.insertRow(0);
-                row.insertCell(0).innerHTML = 'Controller:';
+                row.insertCell(0).innerHTML = 'Controller';
                 row.insertCell(1).innerHTML = controller;
                 column.appendChild(table);
             }
             break;
 
-        case 'data/air/dynamic':
+        case 'data/dynamic':
             var column = document.getElementById('values');
             column.innerHTML = null;
-            var data = message['data'];
+            var data = message['data']['air'];
             column.appendChild(generate_table(data));
             break;
     }
 };
-
