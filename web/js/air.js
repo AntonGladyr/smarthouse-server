@@ -6,7 +6,7 @@ function generate_table(types, values) {
         row.insertCell(0).innerHTML = types[i];
         row.insertCell(1).innerHTML = values[i];
     }
-    return table;
+    return 
 }
 
 
@@ -28,10 +28,10 @@ websocket.onmessage = function (event) {
     }
 
     switch (message['type']) {
-        case 'data/air/static':
+        case 'data/static':
             var column = document.getElementById('controllers-info');
             column.innerHTML = null;
-            var data = message['data'];
+            var data = message['data']['air'];
 
             for (var controller in data) {
                 var table = generate_table(data[controller]['types'], data[controller]['values']);
