@@ -28,7 +28,7 @@ websocket.onmessage = function (event) {
     }
 
     switch (message['type']) {
-        case 'data/static':
+        case 'data/air/static':
             var column = document.getElementById('controllers-info');
             column.innerHTML = null;
             var data = message['data']['air'];
