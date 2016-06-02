@@ -6,11 +6,11 @@ function generate_table(types, values) {
         row.insertCell(0).innerHTML = types[i];
         row.insertCell(1).innerHTML = values[i];
     }
-    return 
+    return table
 }
 
 
-var websocket = new WebSocket("ws://smarthouse.php.onlini.co:8001");
+var websocket = new WebSocket("ws://127.0.0.1:8001");
 
 websocket.onopen = function() {
     var static_data_request = {
@@ -21,7 +21,6 @@ websocket.onopen = function() {
 };
 
 websocket.onmessage = function (event) {
-    console.log(event.data);
     var message = JSON.parse(event.data);
     if (message['destination'] != 'client') {
         return;
@@ -31,10 +30,12 @@ websocket.onmessage = function (event) {
         case 'data/air/static':
             var column = document.getElementById('controllers-info');
             column.innerHTML = null;
-            var data = message['data']['air'];
+            var data = message['data'];
+            console.log(data);
 
             for (var controller in data) {
                 var table = generate_table(data[controller]['types'], data[controller]['values']);
+                console.log(table);
                 var row = table.insertRow(0);
                 row.insertCell(0).innerHTML = 'Controller';
                 row.insertCell(1).innerHTML = controller;
@@ -46,7 +47,7 @@ websocket.onmessage = function (event) {
             var column = document.getElementById('values');
             column.innerHTML = null;
             var data = message['data']['air'];
-            column.appendChild(generate_table(data));
+            column.appendChild(generate_table(data['types'], data['values']));
             break;
     }
 };
