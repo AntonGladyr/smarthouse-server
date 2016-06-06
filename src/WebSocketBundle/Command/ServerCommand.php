@@ -31,7 +31,7 @@ class ServerCommand extends ContainerAwareCommand
         $ws->disableVersion(0); // old, bad, protocol version
 
         // Make sure you're running this as root
-        $server = IoServer::factory(new HttpServer($ws), 110);
+        $server = IoServer::factory(new HttpServer($ws), 443);
         $server->run();
     }
 }
