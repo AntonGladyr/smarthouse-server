@@ -28,10 +28,10 @@ class ServerCommand extends ContainerAwareCommand
 
         /** @var TemperaturesAccess $db_temperatures */
         $ws = new WsServer(new WebSocket($db_temperatures));
-        $ws->disableVersion(0); // old, bad, protocol version
+        $ws->disableVersion(0);
 
         // Make sure you're running this as root
-        $server = IoServer::factory(new HttpServer($ws), 443);
+        $server = IoServer::factory(new HttpServer($ws), $this->getContainer()->getParameter('websocket.port'));
         $server->run();
     }
 }

@@ -1,6 +1,11 @@
 {% extends 'WebViewsBundle:Pages:base.html.twig' %}
 
+
 {% block links %}
+    <script>
+        var host = "{{ host }}";
+        var port = "{{ port }}";
+    </script>
     <script src="{{ asset('Chart.js') }}"></script>
     <link href="{{ asset('css/air.css') }}" rel="stylesheet" media="screen">
     <script src="{{ asset('js/air.js') }}"></script>

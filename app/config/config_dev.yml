@@ -1,6 +1,11 @@
 imports:
     - { resource: config.yml }
 
+parameters:
+    websocket.host: 'ws://127.0.0.1'
+    websocket.port: 3389
+
+
 framework:
     router:
         resource: "%kernel.root_dir%/config/routing_dev.yml"
