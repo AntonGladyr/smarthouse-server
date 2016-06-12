@@ -1,53 +1,47 @@
-function generate_table(types, values) {
-    var table = document.createElement('table');
-    table.className = 'data-table';
-    for (var i = 0; i < types.length; i++) {
-        var row = table.insertRow();
-        row.insertCell(0).innerHTML = types[i];
-        row.insertCell(1).innerHTML = values[i];
-    }
-    return table
+
+
+// GUI part
+// -------------------------------
+function generateTable() {
+    
 }
 
 
-var websocket = new WebSocket(host+":"+port);
 
-websocket.onopen = function() {
-    var static_data_request = {
-        'destination':'server',
-        'type':'request/data/air/static'
-    };
-    websocket.send(JSON.stringify(static_data_request));
+// Init part
+// -------------------------------
+var websocket = new WebSocket(host+':'+port);
+
+
+
+
+// Websocket methods implement
+// -------------------------------
+websocket.onmessage = function(event) {
+    var data = JSON.parse(event.data);
+    if (data['destination'] != 'client') {
+        return null;
+    }
+
+    console.log(event.data);
+
+    switch (data['type']) {
+        case 'data/air/static':
+            // TODO: Parse data and make table
+            break;
+        case 'data/dynamic':
+            data = data['data']['air'];
+            data.forEach(function(controller, name) {
+                
+            });
+            break;
+    }
 };
 
-websocket.onmessage = function (event) {
-    var message = JSON.parse(event.data);
-    if (message['destination'] != 'client') {
-        return;
-    }
-
-    switch (message['type']) {
-        case 'data/air/static':
-            var column = document.getElementById('controllers-info');
-            column.innerHTML = null;
-            var data = message['data'];
-            console.log(data);
-
-            for (var controller in data) {
-                var table = generate_table(data[controller]['types'], data[controller]['values']);
-                console.log(table);
-                var row = table.insertRow(0);
-                row.insertCell(0).innerHTML = 'Controller';
-                row.insertCell(1).innerHTML = controller;
-                column.appendChild(table);
-            }
-            break;
-
-        case 'data/dynamic':
-            var column = document.getElementById('values');
-            column.innerHTML = null;
-            var data = message['data']['air'];
-            column.appendChild(generate_table(data['types'], data['values']));
-            break;
-    }
+websocket.onopen = function() {
+    var request = {
+        'destination': 'server',
+        'type': 'request/data/air/static'
+    };
+    websocket.send(JSON.stringify(request));
 };

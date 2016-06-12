@@ -13,21 +13,56 @@
 
 {% block content %}
 
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#controllers-info">
+                        Controllers info</a>
+                </h4>
+            </div>
+            <div id="controllers-info" class="panel-collapse collapse">
+                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.</div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#current-values">
+                        Current values</a>
+                </h4>
+            </div>
+            <div id="current-values" class="panel-collapse collapse in">
+                <table class = "table">
+                    <tr>
+                        <td>Tanmay</td>
+                        <td>Bangalore</td>
+                    </tr>
 
-    <div class="row-fluid">
-        <div class="col-md-4">
-            <h3>Controllers info</h3>
-            <div id="controllers-info"></div>
+                    <tr>
+                        <td>Sachin</td>
+                        <td>Mumbai</td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div class="col-md-4">
-            <h3>Values</h3>
-            <div id="values"></div>
-        </div>
-        <div class="col-md-4">
-            <h3>Controls</h3>
-            <div id="controls"></div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#controls">
+                        Controls</a>
+                </h4>
+            </div>
+            <div id="controls" class="panel-collapse collapse">
+                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.</div>
+            </div>
         </div>
     </div>
-
 
 {% endblock %}
