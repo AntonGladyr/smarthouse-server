@@ -2,8 +2,17 @@
 
 // GUI part
 // -------------------------------
-function generateTable() {
-    
+function generateTable(descriptions, values) {
+    var table = document.createElement('table');
+    table.className = 'table';
+    for (var i = 0; i < descriptions.length; i++) {
+        var row = table.insertRow();
+        var description_column = row.insertCell(0);
+        var value_column = row.insertCell(1);
+        description_column.innerHTML = descriptions[i];
+        value_column.innerHTML = values[i];
+    }
+    return table;
 }
 
 
@@ -30,10 +39,15 @@ websocket.onmessage = function(event) {
             // TODO: Parse data and make table
             break;
         case 'data/dynamic':
+            document.getElementById('current-values').innerHTML = '';
             data = data['data']['air'];
-            data.forEach(function(controller, name) {
-                
-            });
+            for (var name in data) {
+                var controller = data[name];
+                console.log(controller);
+                document.getElementById('current-values').appendChild(
+                    generateTable(controller['descriptions'], controller['values'])
+                );
+            }
             break;
     }
 };
