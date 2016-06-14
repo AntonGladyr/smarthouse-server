@@ -39,12 +39,15 @@ class WebSocket implements MessageComponentInterface {
         echo $msg;
         $request = json_decode($msg, true);
         if (!$request) {
+            echo "Error";
             return ;
         }
 
         if ($request['destination'] == 'server') {
-            if ($request['type'] == 'init/sensors') {
+
+            if ($request['type'] == 'sensors/init') {
                 $this->static_info = $request['data'];
+                print_r($this->static_info);
                 $this->sensors = $connection;
             }
 
@@ -57,6 +60,8 @@ class WebSocket implements MessageComponentInterface {
                 $connection->send(json_encode($response));
             }
         }
+
+
 
         else if ($request['destination'] == 'client') {
             foreach ($this->clients as $client) {

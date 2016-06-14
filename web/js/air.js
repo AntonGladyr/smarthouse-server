@@ -32,11 +32,20 @@ websocket.onmessage = function(event) {
         return null;
     }
 
-    console.log(event.data);
-
     switch (data['type']) {
         case 'data/air/static':
             // TODO: Parse data and make table
+            document.getElementById('controllers-info').innerHTML = '';
+            data = data['data'];
+            for (var name in data) {
+                var controller = data[name];
+                if (controller == undefined) {
+                    continue;
+                }
+                document.getElementById('controllers-info').appendChild(
+                    generateTable(controller['descriptions'], controller['values'])
+                );
+            }
             break;
         case 'data/dynamic':
             document.getElementById('current-values').innerHTML = '';
