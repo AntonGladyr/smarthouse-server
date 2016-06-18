@@ -39,38 +39,55 @@ class WebSocket implements MessageComponentInterface {
         echo $msg;
         $request = json_decode($msg, true);
         if (!$request) {
-            echo "Error";
+            echo "Error\n";
             return ;
         }
 
-        if ($request['destination'] == 'server') {
-
-            if ($request['type'] == 'sensors/init') {
-                $this->static_info = $request['data'];
-                print_r($this->static_info);
-                $this->sensors = $connection;
-            }
-
-            else if ($request['type'] == 'request/data/air/static') {
-                $response = array(
-                    'destination'=>'client',
-                    'type'=>'data/air/static',
-                    'data'=>$this->static_info['air']
-                );
-                $connection->send(json_encode($response));
-            }
-        }
 
 
+        switch ($request['destination']) {
 
-        else if ($request['destination'] == 'client') {
-            foreach ($this->clients as $client) {
-                $client->send($msg);
-            }
-        }
+            // Server handle
+            case 'server':
+                switch ($request['type']) {
+                    // Sensors init
+                    case 'sensors/init':
+                        $this->static_info = $request['data'];
+                        print_r($this->static_info);
+                        $this->sensors = $connection;
+                        break;
+                    // Static data
+                    case 'request/data/air/static':
+                        $response = array(
+                            'destination'=>'client',
+                            'type'=>'data/air/static',
+                            'data'=>$this->static_info['air']
+                        );
+                        $connection->send(json_encode($response));
+                        break;
+                    case 'request/data/power/static':
+                        $response = array(
+                            'destination'=>'client',
+                            'type'=>'data/power/static',
+                            'data'=>$this->static_info['power']
+                        );
+                        $connection->send(json_encode($response));
+                        break;
+                    // Database
+                };
+                break;
 
-        else if ($request['destination'] == 'sensors') {
-            $this->sensors->send($msg);
+            // Broadcast
+            case 'client':
+                foreach ($this->clients as $client) {
+                    $client->send($msg);
+                }
+                break;
+
+            // Commands
+            case 'sensors':
+                $this->sensors->send($msg);
+                break;
         }
 
     }
