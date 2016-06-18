@@ -2,9 +2,7 @@
 
 // GUI part
 // -------------------------------
-function generateTable(descriptions, values) {
-    var table = document.createElement('table');
-    table.className = 'table';
+function generateTable(descriptions, values, table) {
     for (var i = 0; i < descriptions.length; i++) {
         var row = table.insertRow();
         var description_column = row.insertCell(0);
@@ -35,6 +33,8 @@ websocket.onmessage = function(event) {
     switch (data['type']) {
         case 'data/air/static':
             // TODO: Parse data and make table
+            var table = document.createElement('table');
+            table.className = 'table';
             document.getElementById('controllers-info').innerHTML = '';
             data = data['data'];
             for (var name in data) {
@@ -42,8 +42,16 @@ websocket.onmessage = function(event) {
                 if (controller == undefined) {
                     continue;
                 }
+
+                //TODO fix
+                var row = table.insertRow();
+                row.style.background = "#50CFFA";
+                var description_column = row.insertCell(0);
+                description_column.style.textAlign = "center";
+                description_column.innerHTML = Object.keys(data)[0].bold();
+
                 document.getElementById('controllers-info').appendChild(
-                    generateTable(controller['descriptions'], controller['values'])
+                    generateTable(controller['descriptions'], controller['values'], table)
                 );
             }
             break;
