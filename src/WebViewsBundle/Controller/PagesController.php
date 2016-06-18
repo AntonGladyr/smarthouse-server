@@ -41,7 +41,7 @@ class PagesController extends Controller
     }
 
     /**
-     * @Route("/login")
+     * @Route("/login", name="login")
      */
     public function signIn(Request $request) {
         $authenticationUtils = $this->get('security.authentication_utils');
