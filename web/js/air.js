@@ -1,78 +1,102 @@
 
+$(document).ready(function() {
 
-// GUI part
-// -------------------------------
-function generateTable(descriptions, values, table) {
-    for (var i = 0; i < descriptions.length; i++) {
-        var row = table.insertRow();
-        var description_column = row.insertCell(0);
-        var value_column = row.insertCell(1);
-        description_column.innerHTML = descriptions[i];
-        value_column.innerHTML = values[i];
-    }
-    return table;
-}
-
-
-
-// Init part
-// -------------------------------
-var websocket = new WebSocket(host+':'+port);
-
-
-
-
-// Websocket methods implement
-// -------------------------------
-websocket.onmessage = function(event) {
-    var data = JSON.parse(event.data);
-    if (data['destination'] != 'client') {
-        return null;
+    // GUI part
+    // -------------------------------
+    function generateInfo(descriptions, values, name, table) {
+        if (name != undefined) {
+            //noinspection JSDuplicatedDeclaration
+            var row = table.insertRow();
+            //noinspection JSDuplicatedDeclaration
+            var name_cell = row.insertCell(0);
+            name_cell.colSpan = 2;
+            name_cell.style.background = "#B3E3F2";
+            name_cell.style.textAlign = "center";
+            name_cell.innerHTML = name.bold();
+        }
+        for (var i = 0; i < descriptions.length; i++) {
+            //noinspection JSDuplicatedDeclaration
+            var row = table.insertRow();
+            //noinspection JSDuplicatedDeclaration
+            var name_cell = row.insertCell(0);
+            var value_cell = row.insertCell(1);
+            name_cell.innerHTML = descriptions[i];
+            value_cell.innerHTML = values[i];
+        }
     }
 
-    switch (data['type']) {
-        case 'data/air/static':
-            // TODO: Parse data and make table
-            var table = document.createElement('table');
-            table.className = 'table';
-            document.getElementById('controllers-info').innerHTML = '';
-            data = data['data'];
-            for (var name in data) {
-                var controller = data[name];
-                if (controller == undefined) {
-                    continue;
+
+    // Init part
+    // -------------------------------
+    var websocket = new WebSocket(host+':'+port);
+    var controllers_table = document.getElementById('controllers-info-table');
+    var values_table = document.getElementById('current-values-table');
+
+
+
+    // Websocket methods implement
+    // -------------------------------
+    websocket.onmessage = function(event) {
+
+        // Just parse
+        var data = JSON.parse(event.data);
+
+        // Check destination
+        if (data['destination'] != 'client') {
+            return null;
+        }
+
+        switch (data['type']) {
+
+            case 'data/air/static':
+
+                // Get only data part
+                data = data['data'];
+
+                // Clear table
+                controllers_table.innerHTML = '';
+
+                // Loop through controllers
+                //noinspection JSDuplicatedDeclaration
+                for (var controller_name in data) {
+                    generateInfo(data[controller_name]['descriptions'],
+                                 data[controller_name]['values'],
+                                 controller_name,
+                                 controllers_table
+                    );
                 }
+                break;
 
-                //TODO fix
-                var row = table.insertRow();
-                row.style.background = "#50CFFA";
-                var description_column = row.insertCell(0);
-                description_column.style.textAlign = "center";
-                description_column.innerHTML = Object.keys(data)[0].bold();
 
-                document.getElementById('controllers-info').appendChild(
-                    generateTable(controller['descriptions'], controller['values'], table)
-                );
-            }
-            break;
-        case 'data/dynamic':
-            document.getElementById('current-values').innerHTML = '';
-            data = data['data']['air'];
-            for (var name in data) {
-                var controller = data[name];
-                console.log(controller);
-                document.getElementById('current-values').appendChild(
-                    generateTable(controller['descriptions'], controller['values'])
-                );
-            }
-            break;
-    }
-};
+            case 'data/dynamic':
 
-websocket.onopen = function() {
-    var request = {
-        'destination': 'server',
-        'type': 'request/data/air/static'
+                // Get needed data part
+                data = data['data']['air'];
+
+                // Clear table
+                values_table.innerHTML = '';
+
+                //noinspection JSDuplicatedDeclaration
+                for (var controller_name in data) {
+                    generateInfo(
+                        data[controller_name]['descriptions'],
+                        data[controller_name]['values'],
+                        undefined,
+                        values_table
+                    );
+                }
+                break;
+        }
     };
-    websocket.send(JSON.stringify(request));
-};
+
+
+
+    websocket.onopen = function() {
+        var request = {
+            'destination': 'server',
+            'type': 'request/data/air/static'
+        };
+        websocket.send(JSON.stringify(request));
+    };
+
+});
