@@ -49,10 +49,11 @@ $(document).ready(function() {
 
         switch (data['type']) {
 
-            case 'data/air/static':
+            case 'data/water/static':
 
                 // Get only data part
                 data = data['data'];
+                console.log(data);
 
                 // Clear table
                 controllers_table.innerHTML = '';
@@ -61,9 +62,9 @@ $(document).ready(function() {
                 //noinspection JSDuplicatedDeclaration
                 for (var controller_name in data) {
                     generateInfo(data[controller_name]['descriptions'],
-                                 data[controller_name]['values'],
-                                 controller_name,
-                                 controllers_table
+                        data[controller_name]['values'],
+                        controller_name,
+                        controllers_table
                     );
                 }
                 break;
@@ -72,7 +73,7 @@ $(document).ready(function() {
             case 'data/dynamic':
 
                 // Get needed data part
-                data = data['data']['air'];
+                data = data['data']['water'];
 
                 // Clear table
                 values_table.innerHTML = '';
@@ -95,7 +96,7 @@ $(document).ready(function() {
     websocket.onopen = function() {
         var request = {
             'destination': 'server',
-            'type': 'request/data/air/static'
+            'type': 'request/data/water/static'
         };
         websocket.send(JSON.stringify(request));
     };

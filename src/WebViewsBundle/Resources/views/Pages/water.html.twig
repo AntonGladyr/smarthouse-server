@@ -1,5 +1,57 @@
 {% extends 'WebViewsBundle:Pages:base.html.twig' %}
 
+
+{% block links %}
+    <script>
+        var host = "{{ host }}";
+        var port = "{{ port }}";
+    </script>
+    <script src="{{ asset('Chart.js') }}"></script>
+    <link href="{{ asset('css/water.css') }}" rel="stylesheet" media="screen">
+    <script src="{{ asset('js/water.js') }}"></script>
+{% endblock %}
+
 {% block content %}
-In progress
+
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#controllers-info">
+                        Controllers info
+                    </a>
+                </h4>
+            </div>
+            <div id="controllers-info" class="panel-collapse collapse">
+                <table class="table" id="controllers-info-table">
+
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#current-values">
+                        Current values</a>
+                </h4>
+            </div>
+            <div id="current-values" class="panel-collapse collapse in">
+                <table class="table" id="current-values-table">
+
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#controls">
+                        Controls</a>
+                </h4>
+            </div>
+            <div id="controls" class="panel-collapse collapse">
+
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

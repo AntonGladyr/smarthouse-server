@@ -20,7 +20,10 @@ class PagesController extends Controller
      * @Route("/power")
      */
     public function powerInfo() {
-    	return $this->render('WebViewsBundle:Pages:power.html.twig');
+        return $this->render('WebViewsBundle:Pages:power.html.twig',
+            array('host'=>$this->getParameter('websocket.host'),
+                'port'=>$this->getParameter('websocket.port'))
+        );
     }
 
     /**
@@ -37,7 +40,10 @@ class PagesController extends Controller
      * @Route("/water")
      */
     public function waterInfo() {
-    	return $this->render('WebViewsBundle:Pages:water.html.twig');
+        return $this->render('WebViewsBundle:Pages:water.html.twig',
+            array('host'=>$this->getParameter('websocket.host'),
+                'port'=>$this->getParameter('websocket.port'))
+        );
     }
 
     /**

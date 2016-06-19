@@ -73,6 +73,15 @@ class WebSocket implements MessageComponentInterface {
                         );
                         $connection->send(json_encode($response));
                         break;
+                    case 'request/data/water/static':
+                        $response = array(
+                            'destination'=>'client',
+                            'type'=>'data/water/static',
+                            'data'=>$this->static_info['water']
+                        );
+                        print_r($response);
+                        $connection->send(json_encode($response));
+                        break;
                     // Database
                 };
                 break;
