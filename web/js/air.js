@@ -1,6 +1,20 @@
 
 $(document).ready(function() {
 
+    // Input validation part
+    function valuesValidation(e) {
+        var values_range = e.target.id.split(":")[1].split("-");
+        values_range = values_range.map(function(x) {
+            return parseInt(x, 10);
+        });
+        if (e.target.value >= values_range[0] && e.target.value <= values_range[1]) {
+            e.target.className = 'form-control validation-input-success';
+        }
+        else {
+            e.target.className = 'form-control validation-input-error';
+        }
+    }
+
     // GUI part
     // -------------------------------
     function generateInfo(descriptions, values, name, table) {
@@ -26,12 +40,55 @@ $(document).ready(function() {
         }
     }
 
+    function generateControls(field_list, table) {
+        for (var controller_name in field_list) {
+
+            // Controller name field
+
+            //noinspection JSDuplicatedDeclaration
+            var row = table.insertRow();
+            //noinspection JSDuplicatedDeclaration
+            var name_cell = row.insertCell(0);
+            name_cell.colSpan = 2;
+            name_cell.style.background = "#B3E3F2";
+            name_cell.style.textAlign = "center";
+            name_cell.innerHTML = controller_name.bold();
+
+            // Descriptions part
+
+            for (var control_description in field_list[controller_name]) {
+                var control = field_list[controller_name][control_description];
+                switch (control['type']) {
+                    case 'number':
+                        var control_row = table.insertRow();
+                        var control_desc_cell = control_row.insertCell(0);
+                        var control_ctrl_cell = control_row.insertCell(1);
+
+                        control_desc_cell.style.width = '60%';
+                        control_desc_cell.style.verticalAlign = 'middle';
+                        control_desc_cell.innerHTML = control_description;
+
+                        var value_input = document.createElement('input');
+                        value_input.className='form-control validation-input-success';
+                        value_input.value = control['value'];
+                        value_input.id = control_description+':'+
+                                         control['range'][0].toString()+'-'+
+                                         control['range'][1].toString();
+                        value_input.addEventListener("input", valuesValidation);
+
+                        control_ctrl_cell.appendChild(value_input);
+                        break;
+                }
+            }
+        }
+    }
 
     // Init part
     // -------------------------------
     var websocket = new WebSocket(host+':'+port);
     var controllers_table = document.getElementById('controllers-info-table');
     var values_table = document.getElementById('current-values-table');
+    var controls_table = document.getElementById('controls-table');
 
 
 
@@ -86,6 +143,14 @@ $(document).ready(function() {
                         values_table
                     );
                 }
+                break;
+
+            case 'controls/air':
+                var controls = data['controls'];
+
+                //noinspection JSDuplicatedDeclaration
+                generateControls(controls, controls_table);
+
                 break;
         }
     };

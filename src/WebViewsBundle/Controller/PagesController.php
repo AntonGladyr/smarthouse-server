@@ -30,6 +30,36 @@ class PagesController extends Controller
      * @Route("/air")
      */
     public function temperatureInfo() {
+        /*
+          {
+                "destination": "client",
+                "type": "controls/air",
+                "controls": {
+                    "GD10": {
+                        "Example1": {
+                            "type": "number",
+                            "range": [10, 40],
+                            "label": "warning",
+                            "value": 10
+                        },
+                        "Example2": {
+                            "type": "number",
+                            "range": [100, 1000],
+                            "label": "warning",
+                            "value": 150
+                        },
+                        "Example3": {
+                            "type": "number",
+                            "range": [0, 1],
+                            "label": "warning",
+                            "value": 0
+                        }
+                    }
+                }
+            }
+
+         */
+
     	return $this->render('WebViewsBundle:Pages:air.html.twig',
             array('host'=>$this->getParameter('websocket.host'),
                 'port'=>$this->getParameter('websocket.port'))
