@@ -21,7 +21,7 @@ class ControllersInfoController extends Controller
      * @Route("/air")
      */
     public function airInfo() {
-
+        // Renamed
         return $this->render('WebViewsBundle:Pages:air.html.twig',
             array('host'=>$this->getParameter('websocket.host'),
                 'port'=>$this->getParameter('websocket.port'))
