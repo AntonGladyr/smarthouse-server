@@ -82,6 +82,36 @@ class WebSocket implements MessageComponentInterface {
                         print_r($response);
                         $connection->send(json_encode($response));
                         break;
+                    // Controls
+                    case 'request/controls/air':
+                        $response = '{
+                            "destination": "client",
+                            "type": "controls/air",
+                            "controls": {
+                                        "GD10": {
+                                            "Example1": {
+                                                "type": "number",
+                                        "range": [10, 40],
+                                        "label": "warning",
+                                        "value": 10
+                                    },
+                                    "Example2": {
+                                                "type": "number",
+                                        "range": [100, 1000],
+                                        "label": "warning",
+                                        "value": 150
+                                    },
+                                    "Example3": {
+                                                "type": "number",
+                                        "range": [0, 1],
+                                        "label": "warning",
+                                        "value": 0
+                                    }
+                                }
+                            }
+                        }';
+                        $connection->send($response);
+                        break;
                     // Database
                 };
                 break;
