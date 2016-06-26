@@ -86,4 +86,12 @@ class PagesController extends Controller
         return $this->render('WebViewsBundle:Pages:login.html.twig',
             array('error' => $error));
     }
+
+    /**
+     * @Route("/logs")
+     */
+    public function commandsLog()
+    {
+        return $this->render('WebViewsBundle:Pages:home.html.twig');
+    }
 }
