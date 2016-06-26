@@ -163,6 +163,12 @@ $(document).ready(function() {
             'type': 'request/data/air/static'
         };
         websocket.send(JSON.stringify(request));
+
+        request = {
+            'destination': 'server',
+            'type': 'request/controls/air'
+        };
+        websocket.send(JSON.stringify(request));
     };
 
 });
