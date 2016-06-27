@@ -17,6 +17,7 @@ class WebSocket implements MessageComponentInterface {
     protected $db_temperatures;
 
     protected $static_info;
+    protected $controls;
 
     public function __construct(TemperaturesAccess $db_temperatures) {
         $this->db_temperatures = $db_temperatures;
@@ -53,7 +54,7 @@ class WebSocket implements MessageComponentInterface {
                     // Sensors init
                     case 'sensors/init':
                         $this->static_info = $request['data'];
-                        print_r($this->static_info);
+                        $this->controls = $request['controls'];
                         $this->sensors = $connection;
                         break;
                     // Static data
@@ -84,33 +85,12 @@ class WebSocket implements MessageComponentInterface {
                         break;
                     // Controls
                     case 'request/controls/air':
-                        $response = '{
-                            "destination": "client",
-                            "type": "controls/air",
-                            "controls": {
-                                        "GD10": {
-                                            "Example1": {
-                                                "type": "number",
-                                        "range": [10, 40],
-                                        "label": "warning",
-                                        "value": 10
-                                    },
-                                    "Example2": {
-                                                "type": "number",
-                                        "range": [100, 1000],
-                                        "label": "warning",
-                                        "value": 150
-                                    },
-                                    "Example3": {
-                                                "type": "number",
-                                        "range": [0, 1],
-                                        "label": "warning",
-                                        "value": 0
-                                    }
-                                }
-                            }
-                        }';
-                        $connection->send($response);
+                        $response = array(
+                            'destination'=>'client',
+                            'type'=>'controls/air',
+                            'controls'=>$this->controls['air']
+                        );
+                        $connection->send(json_encode($response));
                         break;
                     // Database
                 };

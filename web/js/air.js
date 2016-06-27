@@ -1,3 +1,6 @@
+/*global $*/
+/*global host*/
+/*global port*/
 
 $(document).ready(function() {
 
@@ -17,30 +20,43 @@ $(document).ready(function() {
 
     // GUI part
     // -------------------------------
-    function generateInfo(descriptions, values, name, table) {
-        if (name != undefined) {
-            //noinspection JSDuplicatedDeclaration
-            var row = table.insertRow();
-            //noinspection JSDuplicatedDeclaration
-            var name_cell = row.insertCell(0);
-            name_cell.colSpan = 2;
-            name_cell.style.background = "#B3E3F2";
-            name_cell.style.textAlign = "center";
-            name_cell.innerHTML = name.bold();
+    function generateInfo(data, named, table_name) {
+
+        if (named) {
+            var ready_data = [];
+            for (var name in data) {
+                ready_data.push({"description": "Controller name", "value": name, "type": ' '});
+                for (var value_index in data[name]) {
+                    ready_data.push(data[name][value_index]);
+                }
+            }
+            
+            data = ready_data;
         }
-        for (var i = 0; i < descriptions.length; i++) {
-            //noinspection JSDuplicatedDeclaration
-            var row = table.insertRow();
-            //noinspection JSDuplicatedDeclaration
-            var name_cell = row.insertCell(0);
-            var value_cell = row.insertCell(1);
-            name_cell.innerHTML = descriptions[i];
-            name_cell.style.width = "60%";
-            value_cell.innerHTML = values[i];
-        }
+        
+        $(table_name).bootstrapTable({
+            columns: [
+                {
+                    field: "description",
+                    title: "Description"
+                },
+                {
+                    field: "value",
+                    title: "Value"
+                },
+                {
+                    field: "type",
+                    title: "Type"
+                }
+            ],
+            data: data
+        });
     }
 
-    function generateControls(field_list, table) {
+    function generateControls(field_list, table_name) {
+        var table = document.getElementById(table_name);
+        console.log(table_name);
+        
         for (var controller_name in field_list) {
 
             // Controller name field
@@ -86,10 +102,6 @@ $(document).ready(function() {
     // Init part
     // -------------------------------
     var websocket = new WebSocket(host+':'+port);
-    var controllers_table = document.getElementById('controllers-info-table');
-    var values_table = document.getElementById('current-values-table');
-    var controls_table = document.getElementById('controls-table');
-
 
 
     // Websocket methods implement
@@ -111,45 +123,24 @@ $(document).ready(function() {
                 // Get only data part
                 data = data['data'];
 
-                // Clear table
-                controllers_table.innerHTML = '';
+                generateInfo(data, true, '#controllers-info-table')
 
-                // Loop through controllers
-                //noinspection JSDuplicatedDeclaration
-                for (var controller_name in data) {
-                    generateInfo(data[controller_name]['descriptions'],
-                                 data[controller_name]['values'],
-                                 controller_name,
-                                 controllers_table
-                    );
-                }
                 break;
-
-
             case 'data/dynamic':
 
                 // Get needed data part
                 data = data['data']['air'];
 
-                // Clear table
-                values_table.innerHTML = '';
-
-                //noinspection JSDuplicatedDeclaration
-                for (var controller_name in data) {
-                    generateInfo(
-                        data[controller_name]['descriptions'],
-                        data[controller_name]['values'],
-                        undefined,
-                        values_table
-                    );
-                }
+                generateInfo(data, false, '#current-values-table')
+                
                 break;
 
             case 'controls/air':
+                console.log(data);
                 var controls = data['controls'];
 
                 //noinspection JSDuplicatedDeclaration
-                generateControls(controls, controls_table);
+                generateControls(controls, 'controls-table');
 
                 break;
         }
