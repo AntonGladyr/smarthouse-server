@@ -11,9 +11,10 @@ class ControllersInfoController extends Controller
      * @Route("/power")
      */
     public function powerInfo() {
-        return $this->render('WebViewsBundle:Pages:power.html.twig',
+        return $this->render('WebViewsBundle:Pages:info.html.twig',
             array('host'=>$this->getParameter('websocket.host'),
-                'port'=>$this->getParameter('websocket.port'))
+                'port'=>$this->getParameter('websocket.port'),
+                'page'=>'power')
         );
     }
 
@@ -22,9 +23,10 @@ class ControllersInfoController extends Controller
      */
     public function airInfo() {
         // Renamed
-        return $this->render('WebViewsBundle:Pages:air.html.twig',
+        return $this->render('WebViewsBundle:Pages:info.html.twig',
             array('host'=>$this->getParameter('websocket.host'),
-                'port'=>$this->getParameter('websocket.port'))
+                'port'=>$this->getParameter('websocket.port'),
+                'page'=>'air')
         );
     }
 
@@ -34,7 +36,8 @@ class ControllersInfoController extends Controller
     public function waterInfo() {
         return $this->render('WebViewsBundle:Pages:water.html.twig',
             array('host'=>$this->getParameter('websocket.host'),
-                'port'=>$this->getParameter('websocket.port'))
+                'port'=>$this->getParameter('websocket.port'),
+                'page'=>'water')
         );
     }
 }

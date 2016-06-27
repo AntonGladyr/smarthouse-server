@@ -1,6 +1,7 @@
 /*global $*/
 /*global host*/
 /*global port*/
+/*global page*/
 
 $(document).ready(function() {
 
@@ -133,17 +134,17 @@ $(document).ready(function() {
 
         switch (data['type']) {
 
-            case 'data/air/static':
+            case 'data/'+page+'/static':
                 data = data['data'];
                 generateInfo(data, true, '#controllers-info-table');
                 break;
                 
             case 'data/dynamic':
-                data = data['data']['air'];
+                data = data['data'][page];
                 generateInfo(data, false, '#current-values-table');
                 break;
 
-            case 'controls/air':
+            case 'controls/'+page:
                 console.log(data);
                 var controls = data['controls'];
                 generateControls(controls, 'controls-table');
@@ -160,13 +161,13 @@ $(document).ready(function() {
     websocket.onopen = function() {
         var request = {
             'destination': 'server',
-            'type': 'request/data/air/static'
+            'type': 'request/data/'+page+'/static'
         };
         websocket.send(JSON.stringify(request));
 
         request = {
             'destination': 'server',
-            'type': 'request/controls/air'
+            'type': 'request/controls/'+page
         };
         websocket.send(JSON.stringify(request));
     };
