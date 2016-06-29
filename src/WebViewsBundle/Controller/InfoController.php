@@ -22,6 +22,10 @@ class InfoController extends Controller
      * @Route("/air")
      */
     public function airInfo() {
+
+        $session = $this->get( 'session' );
+        $session->set('petro','asas');
+
         // Renamed
         return $this->render('WebViewsBundle:Pages:info.html.twig',
             array('host'=>$this->getParameter('websocket.host'),

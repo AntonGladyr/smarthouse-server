@@ -6,6 +6,9 @@ namespace WebSocketBundle;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 use DatabaseBundle\TemperaturesAccess;
+use Ratchet\WebSocket\Version\RFC6455\Connection;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class WebSocket implements MessageComponentInterface {
 
@@ -19,7 +22,7 @@ class WebSocket implements MessageComponentInterface {
     protected $static_info;
     protected $controls;
 
-    public function __construct(TemperaturesAccess $db_temperatures) {
+    public function __construct( TemperaturesAccess $db_temperatures ) {
         $this->db_temperatures = $db_temperatures;
         $this->clients = new \SplObjectStorage;
     }
@@ -36,8 +39,13 @@ class WebSocket implements MessageComponentInterface {
 
 
     public function onMessage(ConnectionInterface $connection, $msg) {
-        echo "Message handled:\n";
-        echo $msg;
+
+        /** @var Session $session */
+        $session = $connection->Session;
+        var_dump( $session->all() );
+        /** @var Connection $connection */
+//        echo "Message handled:\n";
+//        echo $msg;
         $request = json_decode($msg, true);
         if (!$request) {
             echo "Error\n";
