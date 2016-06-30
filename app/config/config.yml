@@ -72,7 +72,9 @@ swiftmailer:
 
 hwi_oauth:
     # name of the firewall in which this bundle is active, this setting MUST be set
-    firewall_name: secured_area
+    firewall_name: main
+    connect:
+            account_connector: ib_user.oauth_user_provider
     resource_owners:
         facebook:
             type:                facebook
@@ -83,7 +85,7 @@ hwi_oauth:
             paths:
                 email: email
             options:
-                display: page
+                display: popup
                 csrf: true
         google:
             type:                google

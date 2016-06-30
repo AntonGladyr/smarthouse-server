@@ -2,8 +2,9 @@
 
 namespace UserBundle;
 
+use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider;
 
-use Symfony\Component\Security\Core\User\UserProviderInterface;
+//use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -11,13 +12,15 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use UserBundle\User;
 use DatabaseBundle\UsersAccess;
 
-class UserProvider implements UserProviderInterface {
+class UserProvider extends OAuthUserProvider { //implements UserProviderInterface
 
     private $db_users;
+    protected $session, $service_container;
 
-    public function __construct(UsersAccess $db_users)
+    public function __construct($session, $service_container)
     {
-        $this->db_users = $db_users;
+        $this->session = $session;
+        $this->service_container = $service_container;
     }
 
     public function loadUserByUsername($username)
@@ -50,4 +53,5 @@ class UserProvider implements UserProviderInterface {
     {
         return $class === 'UserBundle\User';
     }
+
 }

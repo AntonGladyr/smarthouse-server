@@ -3,6 +3,9 @@
 security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    acl:
+        connection: default
+
     providers:
         in_memory:
             memory:
@@ -10,38 +13,20 @@ security:
                     admin:
                         password: admin
                         roles: 'ROLE_ADMIN'
-        main_user:
-            id: user.provider
+
+        my_custom_hwi_provider:
+            id: ib_user.oauth_user_provider
 
 
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        login:
-            pattern: ^/login$
-            security: false
 
         main:
             pattern: ^/
-            http_basic:
-                provider: in_memory
+            anonymous: true
             logout:
                 path: /logout
                 target: /
-            form_login:
-                login_path: /login
-                check_path: /login_check
-                always_use_default_target_path: true
-                target_path_parameter: redirect_url
-                use_referer: true
-            security: true
-
-        secured_area:
-            anonymous: ~
             oauth:
                 resource_owners:
                     facebook:           "/login/check-facebook"
@@ -51,15 +36,35 @@ security:
                 login_path:        /login
                 use_forward:       false
                 failure_path:      /login
-
+                provider: fos_userbundle
                 oauth_user_provider:
-                    service: hwi_oauth.user.provider
+                    service: ib_user.oauth_user_provider
+
+            http_basic:
+                provider: in_memory
+            form_login:
+                login_path: /login
+                check_path: /login_check
+                always_use_default_target_path: true
+                target_path_parameter: redirect_url
+                use_referer: true
+            security: true
+
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login:
+            pattern: ^/login$
+            security: false
+
+        secured_area:
+            anonymous: ~
 
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-
-    access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connect, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, role: ROLE_ADMIN }
 
     encoders:
