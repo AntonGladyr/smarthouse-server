@@ -98,8 +98,8 @@ hwi_oauth:
             options:
                 csrf: true
 
-        github:
-            type:                 github
+        my_github:
+            type:                github
             client_id:           09cd97d3042a640947e7
             client_secret:       437d65347f1fc78f2121a308059e67fc805064f8
             scope:               ""
