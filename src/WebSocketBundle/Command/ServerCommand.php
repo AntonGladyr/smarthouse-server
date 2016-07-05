@@ -41,7 +41,7 @@ class ServerCommand extends ContainerAwareCommand
 
         $authorizationChecker = $this->getContainer()->get( 'security.authorization_checker' );
 
-        var_dump($authorizationChecker->isGranted('ROLE_ADMIN'));
+        //var_dump($authorizationChecker->isGranted('ROLE_ADMIN'));
 
         $session        = new SessionProvider(
             $webSocket,

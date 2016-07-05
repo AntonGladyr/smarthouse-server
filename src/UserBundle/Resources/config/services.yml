@@ -8,4 +8,4 @@ services:
 
     ib_user.oauth_user_provider:
         class: UserBundle\UserProvider
-        arguments: [@session, @service_container, {facebook: facebookID, google: googleID}]
+        arguments: [@session, @service_container]

@@ -12,11 +12,11 @@ class User implements UserInterface, EquatableInterface
     private $salt;
     private $roles;
 
-    public function __construct($username, $password, $salt, array $roles)
+    public function __construct($username, $password, /*$salt, */array $roles)
     {
         $this->username = $username;
         $this->password = $password;
-        $this->salt = $salt;
+        //$this->salt = $salt;
         $this->roles = $roles;
     }
 

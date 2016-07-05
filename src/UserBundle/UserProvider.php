@@ -25,7 +25,7 @@ class UserProvider extends OAuthUserProvider { //implements UserProviderInterfac
 
     public function loadUserByUsername($username)
     {
-        $user_data = $this->db_users->selectUserByUsername($username);
+        /*$user_data = $this->db_users->selectUserByUsername($username);
 
         if (!$user_data['username']) {
             throw new UsernameNotFoundException(
@@ -33,8 +33,8 @@ class UserProvider extends OAuthUserProvider { //implements UserProviderInterfac
             );
         }
 
-        $user = new User($user_data['username'], $user_data['password'], $user_data['salt'], array('ROLE_ADMIN'));
-        return $user;
+        $user = new User($user_data['username'], $user_data['password'], $user_data['salt'], array('ROLE_ADMIN'));*/
+        return new User('admin', 'admin', array('ROLE_ADMIN'));
 
     }
 
