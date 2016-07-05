@@ -92,7 +92,7 @@ hwi_oauth:
             type:                google
             client_id:           755438172754-bdmrg079mhch5dl2rjsd7n8dlng9tnct.apps.googleusercontent.com
             client_secret:       DNJjhHoF3qcIgjO1eO2XwLh_
-            scope:              ""
+            scope:              "https://www.googleapis.com/auth/userinfo.profile"
             paths:
                 email: email
             options:
